@@ -8,6 +8,8 @@ services:
             dockerfile: app.dockerfile
         image: 1c23-tp-1-app
         container_name: 1c23-tp-1-app
+        ports:
+            - "3000:3000"
         networks:
             - tp1_net
 
