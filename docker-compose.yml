@@ -4,6 +4,8 @@ services:
 
     redis:
         image: redis:latest
+        networks:
+            - tp1_net
 
     app:
         build:
