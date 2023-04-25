@@ -7,6 +7,15 @@ app.get("/ping", (req, res) =>{
   res.status(200).send("pong");
 })
 
+app.get('/fact', (req, res) => {
+  axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en')
+  .then(factsRes => {
+    const factsInfo = factsRes.data;
+    console.log('Data: ', factsInfo)
+    res.send(factsInfo['text'])
+  })
+})
+
 app.get('/space_news', (req, res) => {
   axios.get('https://api.spaceflightnewsapi.net/v4/articles')
   .then(spaceFlightRes => {
