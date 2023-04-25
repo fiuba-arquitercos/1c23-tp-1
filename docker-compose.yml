@@ -4,8 +4,6 @@ services:
 
     redis:
         image: redis:latest
-        ports:
-            - 6379
 
     app:
         build:
@@ -19,8 +17,6 @@ services:
             - tp1_net
         links: 
             - redis
-        depends_on:
-            - redis 
 
     nginx:
         image: nginx:1.23.4

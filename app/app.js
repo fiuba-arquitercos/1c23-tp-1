@@ -1,15 +1,21 @@
-const redis = require('redis');
+const { createClient } = require("redis");
 const express = require('express')
 const app = express()
 const port = 3000
 const axios = require('axios');
-let redisClient = redis.createClient('redis://redis:6379');
+let redisClient = createClient('redis://redis:6379');
 
-redisClient.connect().then(() => {
-  console.log("Connected to redis!!")
-}).catch(() => {
-  console.log("Unable to connect to redis :(")
-})
+(async () => {
+      await redisClient.connect();
+})();
+redisClient.on('ready', () => {
+  console.log("Connected!");
+});
+
+redisClient.on("error", (err) => {
+  console.log("Error in the Connection");
+});
+
 const { XMLParser } = require('fast-xml-parser');
 const { decode } = require('metar-decoder');
 
