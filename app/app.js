@@ -3,6 +3,10 @@ const app = express()
 const port = 3000
 const axios = require('axios');
 
+app.get("/ping", (req, res) =>{
+  res.status(200).send("pong");
+})
+
 app.get('/space_news', (req, res) => {
   axios.get('https://api.spaceflightnewsapi.net/v4/articles')
   .then(spaceFlightRes => {
