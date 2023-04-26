@@ -7,19 +7,33 @@ services:
         networks:
             - tp1_net
 
-    app:
+    app_1:
         build:
             context: ./app
             dockerfile: app.dockerfile
         image: 1c23-tp-1-app
-        container_name: 1c23-tp-1-app
-        #ports:
-        #    - "3000:3000" #Remove when nginx is configured
+        container_name: 1c23-tp-1-app-1
         networks:
             - tp1_net
-        links: 
-            - redis
 
+    app_2:
+        build:
+            context: ./app
+            dockerfile: app.dockerfile
+        image: 1c23-tp-1-app
+        container_name: 1c23-tp-1-app-2
+        networks:
+            - tp1_net
+
+    app_3:
+        build:
+            context: ./app
+            dockerfile: app.dockerfile
+        image: 1c23-tp-1-app
+        container_name: 1c23-tp-1-app-3
+        networks:
+            - tp1_net
+    
     nginx:
         image: nginx:1.23.4
         ports:
@@ -30,7 +44,9 @@ services:
         networks:
             - tp1_net
         depends_on:
-            - app
+            - app_1
+            - app_2
+            - app_3
 
     graphite:
         image: graphiteapp/graphite-statsd:1.1.10-4
