@@ -50,13 +50,15 @@ services:
 
     graphite:
         image: graphiteapp/graphite-statsd:1.1.10-4
-        volumes:
-            - ./statsd.config.js:/opt/statsd/config.js
-            - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
         ports:
             - "8090:80"
             - "8125:8125/udp"
             - "8126:8126"
+        volumes:
+            - ./statsd.config.js:/opt/statsd/config.js
+            - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+        networks:
+            - tp1_net
 
     grafana:
         image: grafana/grafana:9.2.15
@@ -67,11 +69,6 @@ services:
 
     cadvisor:
         image: gcr.io/cadvisor/cadvisor:v0.47.0
-        networks:
-            - tp1_net
-        depends_on:
-            - graphite
-        command: -storage_driver="statsd" -storage_driver_host="graphite:8125" -storage_driver_db="cadvisor" -storage_driver_buffer_duration="1s"
         ports:
             - "8080:8080"
         volumes:
@@ -79,7 +76,11 @@ services:
             - "/var/run:/var/run:rw"
             - "/sys:/sys:ro"
             - "/var/lib/docker/:/var/lib/docker:ro"
-    
+        networks:
+            - tp1_net
+        depends_on:
+            - graphite
+        command: -storage_driver="statsd" -storage_driver_host="graphite:8125" -storage_driver_db="cadvisor" -storage_driver_buffer_duration="1s"
 
 volumes:
     grafana_config:
