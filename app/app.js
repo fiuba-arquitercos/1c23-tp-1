@@ -7,6 +7,14 @@ let redisClient = createClient({ url: 'redis://redis:6379' });
 
 const db = new Map();
 
+const delay = time => new Promise(resolveCallback => setTimeout(resolveCallback, time));
+
+async function executeProcess(id) {
+  db.set(id, 'PENDING')
+  await delay(10000);
+  db.set(id, 'FINISH')
+}
+
 (async () => {
       await redisClient.connect();
 })();
@@ -108,7 +116,7 @@ app.get('/metar', (req, res) =>{
 app.post('/big_process', (req, res) => {
   let process_count = db.size
   let process_id = process_count + 1
-  db.set(process_id, 'PENDING')
+  executeProcess(process_id)
   res.send('PROCESS ID: ' + process_id);
 })
 
