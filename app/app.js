@@ -5,6 +5,8 @@ const port = 3000
 const axios = require('axios');
 let redisClient = createClient({ url: 'redis://redis:6379' });
 
+const db = new Map();
+
 (async () => {
       await redisClient.connect();
 })();
@@ -101,6 +103,22 @@ app.get('/metar', (req, res) =>{
       console.log('Error: ', err.message);
       res.send(err.message)
     });
+})
+
+app.post('/big_process', (req, res) => {
+  let process_count = db.size
+  let process_id = process_count + 1
+  db.set(process_id, 'PENDING')
+  res.send('PROCESS ID: ' + process_id);
+})
+
+app.get('/big_process/:id', (req, res) => {
+  let id = Number(req.params.id)
+  let process = db.get(id)
+  if (process) {
+    res.send('PROCESS: ' + process);
+  }
+  res.status(404).send('Process not found');
 })
 
 app.listen(port, () => {
