@@ -33,27 +33,36 @@ app.get("/ping", (req, res) =>{
   res.status(200).send("pong");
 })
 
-app.get('/fact', (req, res) => {
-  axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en')
-  .then(factsRes => {
-    const factsInfo = factsRes.data;
-    console.log('Data: ', factsInfo)
-    res.send(factsInfo['text'])
-  })
-  .catch(err => {
-    console.log('Error: ', err.message)
-    res.send(err.message)
-  });
+app.get('/fact', async (req, res) => {
+  let factString = await redisClient.get('fact');
+
+  if (factString !== null) {
+    console.log("could get cached fact");
+    res.send(JSON.parse(factString));
+  }else {
+    axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en')
+    .then(factsRes => {
+
+      const factsInfo = factsRes.data;
+      console.log('Data: ', factsInfo);
+      let fact = factsInfo['text'];
+      redisClient.set('fact', JSON.stringify(fact), {EX: 60}).then(() => {console.log("Cached fact")}); 
+      res.send(fact)
+    })
+    .catch(err => {
+      console.log('Error: ', err.message)
+      res.send(err.message)
+    });
+  }
 })
 
 app.get('/space_news', async (req, res) => {
   let titlesString = await redisClient.get('space_news');
 
   if (titlesString !== null) {
-    console.log("could get cached data");
+    console.log("could get cached space_news");
     res.send(JSON.parse(titlesString));
   } else {
-    console.log("Data not found or expired");
 
     axios.get('https://api.spaceflightnewsapi.net/v4/articles')
       .then(spaceFlightRes => {
@@ -69,7 +78,7 @@ app.get('/space_news', async (req, res) => {
         const spaceflightNews = response_body.results.slice(0, 5);
         titles = spaceflightNews.map((spaceflightNew) => spaceflightNew.title);
     
-        redisClient.set('space_news', JSON.stringify(titles), {EX: 60}).then(() => {console.log("Cached")}); 
+        redisClient.set('space_news', JSON.stringify(titles), {EX: 60}).then(() => {console.log("Cached space_news")}); 
         res.send(titles);
       })
       .catch(err => {
@@ -77,40 +86,46 @@ app.get('/space_news', async (req, res) => {
         res.send(err.message)
       });
   }
-
-
 })
 
-app.get('/metar', (req, res) =>{
-    const codeStation = req.query.station
-    console.log(codeStation)
-    const parser = new XMLParser();
-    axios.get(`https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${codeStation}&hoursBeforeNow=1`)
-    .then(metarRes => {
+app.get('/metar', async (req, res) =>{
+    let metarString = await redisClient.get('metar');
 
-      const parsed = parser.parse(metarRes.data);
-      if(parsed.response.data.hasOwnProperty('METAR')){
-          const metarInfos = parsed.response.data.METAR;
-          console.log(metarInfos)
-          console.log(typeof metarInfos)
-          if (metarInfos.hasOwnProperty('raw_text')){
-              const results = decode(metarInfos.raw_text);
-              console.log(results);
-              res.send(results);
+    if (metarString !== null) {
+      console.log("could get cached metar");
+      res.send(JSON.parse(metarString));
+    } else {
+      const codeStation = req.query.station
+      console.log(codeStation)
+      const parser = new XMLParser();
+      axios.get(`https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${codeStation}&hoursBeforeNow=1`)
+      .then(metarRes => {
+        const parsed = parser.parse(metarRes.data);
+
+        let results;
+        if(parsed.response.data.hasOwnProperty('METAR')){
+            const metarInfos = parsed.response.data.METAR;
+            console.log(metarInfos)
+            console.log(typeof metarInfos)
+            if (metarInfos.hasOwnProperty('raw_text')){
+                results = decode(metarInfos.raw_text);
+            } else {
+                results = metarInfos.map((metarInfo) => decode(metarInfo.raw_text));
+            }
+            
           } else {
-              const results = metarInfos.map((metarInfo) => decode(metarInfo.raw_text));
-              console.log(results);
-              res.send(results);
+            results = "Metar devolvio vacio para ese aeródromo";
           }
-          
-      } else {
-          res.send("Metar devolvio vacio para ese aeródromo")
-      }
-    })
-    .catch(err => {
-      console.log('Error: ', err.message);
-      res.send(err.message)
-    });
+          redisClient.set('metar', JSON.stringify(results), {EX: 60}).then(() => {console.log("Cached results")}); 
+          console.log(results);
+          res.send(results);  
+      })
+      .catch(err => {
+        console.log('Error: ', err.message);
+        res.send(err.message)
+      });
+    }
+
 })
 
 app.post('/big_process', (req, res) => {
