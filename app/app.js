@@ -29,12 +29,9 @@ async function executeProcess(id) {
 (async () => {
       await redisClient.connect();
 })();
-redisClient.on('ready', () => {
-  console.log("Connected!");
-});
 
-redisClient.on("error", (err) => {
-  console.log("Error in the Connection");
+redisClient.on('ready', () => {
+  console.log("Connected to redis!");
 });
 
 const { XMLParser } = require('fast-xml-parser');
@@ -44,60 +41,91 @@ app.get("/ping", (req, res) =>{
   res.status(200).send("pong");
 })
 
-app.get('/fact', async (req, res) => {
-
+async function process_fact() {
   let factString = await redisClient.get('fact');
-
+  
   if (factString !== null) {
     console.log("could get cached fact");
-    res.send(JSON.parse(factString));
+    return JSON.parse(factString);
   }else {
-    axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en')
-    .then(factsRes => {
 
+    try {
+      let factsRes = await axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en');
       const factsInfo = factsRes.data;
       console.log('Data: ', factsInfo);
       let fact = factsInfo['text'];
       redisClient.set('fact', JSON.stringify(fact), {EX: 60}).then(() => {console.log("Cached fact")}); 
-      res.send(fact)
-    })
-    .catch(err => {
+      return fact
+
+    }catch (err) {
       console.log('Error: ', err.message)
-      res.send(err.message)
-    });
+      return err.message
+    }
   }
+}
+
+app.get('/fact', async (req, res) => {
+
+  const startTime = performance.now();
+
+  let response_message = await process_fact();
+
+  const endTime = performance.now();
+  const duration = endTime - startTime;
+
+  statsd_client.timing('app.fact_endpoint.response_time', duration);
+  res.send(response_message)
+
 })
 
-app.get('/space_news', async (req, res) => {
-  let titlesString = await redisClient.get('space_news');
 
+async function process_space_news() {
+  let titlesString = await redisClient.get('space_news');
+  
   if (titlesString !== null) {
     console.log("could get cached space_news");
-    res.send(JSON.parse(titlesString));
+    return JSON.parse(titlesString);
   } else {
-
-    axios.get('https://api.spaceflightnewsapi.net/v4/articles')
-      .then(spaceFlightRes => {
-      
-        let titles = null;
-        
-        const headerDate = spaceFlightRes.headers && spaceFlightRes.headers.date ? spaceFlightRes.headers.date : 'no response date';
-        console.log('Status Code:', spaceFlightRes.status);
-        console.log('Date in Response header:', headerDate);
-
-        const response_body = spaceFlightRes.data;
-        console.log('Data:', response_body);
-        const spaceflightNews = response_body.results.slice(0, 5);
-        titles = spaceflightNews.map((spaceflightNew) => spaceflightNew.title);
     
-        redisClient.set('space_news', JSON.stringify(titles), {EX: 60}).then(() => {console.log("Cached space_news")}); 
-        res.send(titles);
-      })
-      .catch(err => {
-        console.log('Error: ', err.message);
-        res.send(err.message)
-      });
+    try {
+      const startTime = performance.now();
+
+      let spaceFlightRes = await axios.get('https://api.spaceflightnewsapi.net/v4/articles');
+      const endTime = performance.now();
+      statsd_client.timing('space_news_api.response_time', endTime - startTime);
+
+      let titles = null;
+
+      const headerDate = spaceFlightRes.headers && spaceFlightRes.headers.date ? spaceFlightRes.headers.date : 'no response date';
+      console.log('Status Code:', spaceFlightRes.status);
+      console.log('Date in Response header:', headerDate);
+    
+      const response_body = spaceFlightRes.data;
+      console.log('Data:', response_body);
+      const spaceflightNews = response_body.results.slice(0, 5);
+      titles = spaceflightNews.map((spaceflightNew) => spaceflightNew.title);
+  
+      redisClient.set('space_news', JSON.stringify(titles), {EX: 60}).then(() => {console.log("Cached space_news")}); 
+      return titles;
+
+    }catch (err) {
+      console.log('Error: ', err.message);
+      return err.message;
+    }
   }
+}
+
+app.get('/space_news', async (req, res) => {
+  const startTime = performance.now();
+
+  let response_message = await process_space_news();
+
+  const endTime = performance.now();
+  const duration = endTime - startTime;
+
+  statsd_client.timing('app.space_news_endpoint.response_time', duration);
+  res.send(response_message)
+
 })
 
 async function process_metar_request(req) {
@@ -156,10 +184,9 @@ app.get('/metar', async (req, res) =>{
 
   const endTime = performance.now();
   const duration = endTime - startTime;
-  console.log(duration);
+  console.log('metar', duration);
   statsd_client.timing('app.metar_endpoint.response_time', duration);
   res.send(response_message)
-
 })
 
 app.post('/big_process', (req, res) => {
