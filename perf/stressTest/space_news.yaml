@@ -17,13 +17,13 @@ config:
     - name: Ramp
       duration: 30
       arrivalRate: 4
-      rampTo: 20
+      rampTo: 15
     - name: Plain
       duration: 60
-      arrivalRate: 20
+      arrivalRate: 15
     - name: Ramp 
       duration: 30
-      arrivalRate: 20
+      arrivalRate: 1
       rampTo: 4
     - name: Stop
       duration: 30
@@ -31,7 +31,7 @@ config:
     
 
 scenarios:
-  - name: Fact (/fact)
+  - name: Space news (/space_news)
     flow:
       - get:
-          url: '/fact'
+          url: '/space_news'
