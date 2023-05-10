@@ -67,6 +67,21 @@ services:
         volumes:
             - "grafana_config:/var/lib/grafana"
 
+    cadvisor:
+        image: gcr.io/cadvisor/cadvisor:v0.47.0
+        ports:
+            - "8080:8080"
+        volumes:
+            - "/:/rootfs:ro"
+            - "/var/run:/var/run:rw"
+            - "/sys:/sys:ro"
+            - "/var/lib/docker/:/var/lib/docker:ro"
+        networks:
+            - tp1_net
+        depends_on:
+            - graphite
+        command: -storage_driver="statsd" -storage_driver_host="graphite:8125" -storage_driver_db="cadvisor" -storage_driver_buffer_duration="1s"
+
 volumes:
     grafana_config:
         driver: local
