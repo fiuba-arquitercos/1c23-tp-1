@@ -63,9 +63,11 @@ services:
     grafana:
         image: grafana/grafana:9.2.15
         ports:
-            - "8081:3000"
+            - "80:3000"
         volumes:
             - "grafana_config:/var/lib/grafana"
+        networks:
+            - tp1_net
 
     cadvisor:
         image: gcr.io/cadvisor/cadvisor:v0.47.0
