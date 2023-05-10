@@ -8,11 +8,8 @@ const {performance} = require('perf_hooks');
 
 let redisClient = createClient({ url: 'redis://redis:6379' });
 const statsd_client = new StatsD({
-  "graphiteHost": "127.0.0.1",
-  "graphitePort": 2003,
+  "host": "graphite",
   "port": 8125,
-  "flushInterval": 1000,
-  "deleteIdleStats": true
 });
 
 const db = new Map();
