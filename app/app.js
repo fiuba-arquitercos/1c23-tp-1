@@ -1,5 +1,5 @@
 const { createClient } = require("redis");
-const { StatsD } = require("hot-shots");
+const StatsD = require("node-statsd");
 const express = require('express')
 const app = express()
 const port = 3000
@@ -47,11 +47,16 @@ async function process_fact() {
   }else {
 
     try {
+      const startTime = performance.now();
+
       let factsRes = await axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en');
+      const endTime = performance.now();
+      statsd_client.timing('api.fact.response_time', endTime - startTime);
+
       const factsInfo = factsRes.data;
       console.log('Data: ', factsInfo);
       let fact = factsInfo['text'];
-      redisClient.set('fact', JSON.stringify(fact), {EX: 60}).then(() => {console.log("Cached fact")}); 
+      redisClient.set('fact', JSON.stringify(fact), {EX: 10}).then(() => {console.log("Cached fact")}); 
       return fact
 
     }catch (err) {
@@ -70,7 +75,7 @@ app.get('/fact', async (req, res) => {
   const endTime = performance.now();
   const duration = endTime - startTime;
 
-  statsd_client.timing('app.fact_endpoint.response_time', duration);
+  statsd_client.timing('app.endpoint.fact.response_time', duration);
   res.send(response_message)
 
 })
@@ -89,7 +94,7 @@ async function process_space_news() {
 
       let spaceFlightRes = await axios.get('https://api.spaceflightnewsapi.net/v4/articles');
       const endTime = performance.now();
-      statsd_client.timing('space_news_api.response_time', endTime - startTime);
+      statsd_client.timing('api.space_news.response_time', endTime - startTime);
 
       let titles = null;
 
@@ -102,7 +107,7 @@ async function process_space_news() {
       const spaceflightNews = response_body.results.slice(0, 5);
       titles = spaceflightNews.map((spaceflightNew) => spaceflightNew.title);
   
-      redisClient.set('space_news', JSON.stringify(titles), {EX: 60}).then(() => {console.log("Cached space_news")}); 
+      redisClient.set('space_news', JSON.stringify(titles), {EX: 10}).then(() => {console.log("Cached space_news")}); 
       return titles;
 
     }catch (err) {
@@ -120,7 +125,7 @@ app.get('/space_news', async (req, res) => {
   const endTime = performance.now();
   const duration = endTime - startTime;
 
-  statsd_client.timing('app.space_news_endpoint.response_time', duration);
+  statsd_client.timing('app.endpoint.space_news.response_time', duration);
   res.send(response_message)
 
 })
@@ -144,7 +149,7 @@ async function process_metar_request(req) {
       const startTime = performance.now();
       let metarRes = await axios.get(`https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${codeStation}&hoursBeforeNow=1`)
       const endTime = performance.now();
-      statsd_client.timing('metar_api.response_time', startTime - endTime);
+      statsd_client.timing('api.metar.response_time', startTime - endTime);
       
       
       const parsed = parser.parse(metarRes.data);
@@ -182,7 +187,7 @@ app.get('/metar', async (req, res) =>{
   const endTime = performance.now();
   const duration = endTime - startTime;
   console.log('metar', duration);
-  statsd_client.timing('app.metar_endpoint.response_time', duration);
+  statsd_client.timing('app.endpoint.metar.response_time', duration);
   res.send(response_message)
 })
 
