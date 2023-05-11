@@ -50,74 +50,83 @@ Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a 
 #### Ping
 
 ##### Escenario 1
-* Starting: durante el peridod de 30 segundos se realizan 4 request por segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
-* Plain: durante el peridod de 60 segundos se realizan 40 request port segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 50 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
-#### Fact
+* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
+* **Plain**: durante el peridod de 60 segundos se realizan 40 request port segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 50 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
-* Starting: durante el peridod de 30 segundos se realizan 4 request por segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18 request por segundo 
-* Plain: durante el peridod de 60 segundos se realizan 18 request por segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
+#### Fact
+* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18 request por segundo 
+* **Plain**: durante el peridod de 60 segundos se realizan 18 request por segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
-
-* Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
-* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
-* Plain: durante el peridod de 45 segundos se realizan 25 request por segundo 
-* RampDown: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
+* **Starting**: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* **RampUp**: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
+* **Plain**: durante el peridod de 45 segundos se realizan 25 request por segundo 
+* **RampDown**: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
-
-* Starting: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 10 
-* Plain: durante el peridod de 60 segundos se realizan 10 request port segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 10 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
+* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 10 
+* **Plain**: durante el peridod de 60 segundos se realizan 10 request port segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 10 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 ### Stress Test
+En estos casos se busca evaluar como se comporta el sistema con cargas más allá de su capacidad normal de operación, con la finalidad de verificar si el sistema es capaz de manejar situaciones de picos de tráfico o grandes volúmenes de datos.
 
 #### Ping
-
-* Starting: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 400 
-* Plain: durante el peridod de 60 segundos se realizan 400 request por segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 400 request por segundo disminuyendo hasta llegar a 10 request por segundo 
-* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
+* **Starting**: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 400 
+* **Plain**: durante el peridod de 60 segundos se realizan 400 request por segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 400 request por segundo disminuyendo hasta llegar a 10 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Fact
-
-* Starting: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 300 
-* Plain: durante el peridod de 60 segundos se realizan 300 request por segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 300 request por segundo disminuyendo hasta llegar a 10 request por segundo 
-* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
+* **Starting**: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 300 
+* **Plain**: durante el peridod de 60 segundos se realizan 300 request por segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 300 request por segundo disminuyendo hasta llegar a 10 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
-
-* Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
-* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 120  
-* Plain: durante el peridod de 45 segundos se realizan 120 request port segundo 
-* RampDown: durante el periodo de 20 segundos se realizan 120 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
+* **Starting**: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* **RampUp**: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 120  
+* **Plain**: durante el peridod de 45 segundos se realizan 120 request port segundo 
+* **RampDown**: durante el periodo de 20 segundos se realizan 120 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
 
-* Starting: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18  
-* Plain: durante el peridod de 60 segundos se realizan 18 request port segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
+* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18  
+* **Plain**: durante el peridod de 60 segundos se realizan 18 request port segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 ## Tácticas
 
 ### Caso base
 
 ### Caché
+Endpoints cacheados:
+* `/space_news`
+* `/fact`
+  
+En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
+
+La cantidad de items que se guardan en el cache son dos, ya que `/space_news` y `/fact` solo devuelven un valor.
+
+En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
+
+La información se guarda por 10 segundos en el caso de `/space_news` y en el caso de `/fact` 30 segundos. 
+
+Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
 
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
@@ -153,19 +162,3 @@ El ID obtenido podrá ser utilizado por los clientes puedan consultar el estado 
 
 #### AsyncDesign - Resultado Terminado
 ![](/assets/AsyncDesign-3.png)
-
-## Cache
-
-Endpoints cacheados:
-* /space_news
-* /fact
-  
-En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
-
-La cantidad de items que se guardan en el cache son dos, ya que /space_news y /fact solo devuelven un valor.
-
-En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
-
-La información se guarda por 10 segundos en el caso de /space_news y en el caso de /fact 30 segundos. 
-
-Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
