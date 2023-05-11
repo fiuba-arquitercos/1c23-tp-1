@@ -146,10 +146,12 @@ Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos ob
 
 ![](/assets/Ping-RateLimit-Nodelay.png)
 
-### Async Design - Request Reply Asincrónico (Opcional)
-Como tactica opcional elegimos *Async Design*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
+### Async Design & Concurrency - Request Reply Asincrónico (Opcional)
+Como tácticas opcionales elegimos *Async Design* y *Concurrency*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
 
-Se plantea resolver el problema del procesamiento sincrónico en caso de que varios clientes consuman dicho endpoint, el cual dejaría esperando a los clientes varios segundos hasta que el servidor pueda procesar todas las request pendientes de resolver.
+Se plantea resolver el problema del procesamiento sincrónico de un proceso pesado donde varios clientes consuman dicho endpoint, el cual dejaría esperando a los clientes varios segundos hasta que el servidor pueda procesar todas las request pendientes de resolver. Además, cuantos mas usuarios paralelamente consuman este servicio, mas demoraría en responder.
+
+A travéz de estas tácticas se pretende mejorar los atributos de calidad `Scalability` y `Performance`.
 
 Para esto, `/big_process` retornará un ID de procesamiento.
 
