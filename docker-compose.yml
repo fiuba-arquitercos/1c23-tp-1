@@ -50,10 +50,24 @@ services:
 
     graphite:
         image: graphiteapp/graphite-statsd:1.1.10-4
+        container_name: 1c23-tp-1-graphite-1
         ports:
             - "8090:80"
             - "8125:8125/udp"
             - "8126:8126"
+        volumes:
+            - ./statsd.config.js:/opt/statsd/config.js
+            - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+        networks:
+            - tp1_net
+
+    graphite2:
+        image: graphiteapp/graphite-statsd:1.1.10-4
+        container_name: 1c23-tp-1-graphite-2
+        ports:
+            - "8091:80"
+            - "9125:8125/udp"
+            - "9126:8126"
         volumes:
             - ./statsd.config.js:/opt/statsd/config.js
             - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
@@ -81,8 +95,8 @@ services:
         networks:
             - tp1_net
         depends_on:
-            - graphite
-        command: -storage_driver="statsd" -storage_driver_host="graphite:8125" -storage_driver_db="cadvisor" -storage_driver_buffer_duration="1s"
+            - graphite2
+        command: -storage_driver="statsd" -storage_driver_host="graphite2:8125" -storage_driver_db="cadvisor" -storage_driver_buffer_duration="1s"
 
 volumes:
     grafana_config:
