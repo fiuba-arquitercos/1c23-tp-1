@@ -81,11 +81,24 @@ En la siguiente línea podemos observar que se crea una zona en donde se almacen
 limit_req_zone $binary_remote_addr zone=api_rate_limit:10m rate=10r/s;
 ```
 
-Por otro lado, se define que en caso de que se hahya superado la tasa de solicitudes, el código de respuesta de Nginx sea _429 Too Many Requests_.
+Por otro lado, se define que en caso de que se haya superado la tasa de solicitudes, el código de respuesta de Nginx sea _429 Too Many Requests_.
 
 Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos observar como las requests son resueltas correctamente hasta casi llegando a la mitad de nuestra rampa ascendente, en donde la cantidad de solicitudes aceptadas corresponde a 100, lo cual se verifica con la configuración propuesta.
 
 ![](/assets/Ping-RateLimit-Nodelay.png)
 
+## Cache
 
+Endpoints cacheados:
+* /space_news
+* /fact
+  
+En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
 
+La cantidad de items que se guardan en el cache son dos, ya que /space_news y /fact solo devuelven un valor.
+
+En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
+
+La información se guarda por 10 segundos en el caso de /space_news y en el caso de /fact 30 segundos. 
+
+Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
