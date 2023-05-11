@@ -39,17 +39,53 @@ La principal diferencia con el caso anterior es que se puede ver a Nginx funcion
 
 ![](/assets/VCC_Replicacion.png)
 
+## Escenarios
+Un escenario define los flujos de trabajo de prueba que se deben ejecutar en cada caso para poder así verificar la arquitectura de la aplicación y como impactan en los atributos de calidad en cada caso. 
+Decidimos realizar dos grandes grupos de cargas de trabajo, los denominados _Loading Test_ y los llamados _Stress Test_, que describiremos a continuación.
 
+### Loading Test
 
+#### Ping
 
+#### Fact
 
+#### Metar
 
+#### Space News
 
+### Stress Test
 
+#### Ping
 
+#### Fact
 
+#### Metar
 
+#### Space News
 
+## Tácticas
+
+### Caso base
+
+### Caché
+
+### Replicación
+A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
+
+### Rate Limiting
+Esta táctica es utilizada para limitar la cantidad de solicitudes que un usuario puede realizar en cierto período determinado. Para lograr dicho propósito se utilizó Nginx, cambiando las configuraciones para observar variaciones en las métricas.
+
+En la siguiente línea podemos observar que se crea una zona en donde se almacenarán los contadores para el rate limit, con un tamaño de 10MB y una tasa de 10 solicitudes por segundo.
+
+```Nginx
+limit_req_zone $binary_remote_addr zone=api_rate_limit:10m rate=10r/s;
+```
+
+Por otro lado, se define que en caso de que se hahya superado la tasa de solicitudes, el código de respuesta de Nginx sea _429 Too Many Requests_.
+
+Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos observar como las requests son resueltas correctamente hasta casi llegando a la mitad de nuestra rampa ascendente, en donde la cantidad de solicitudes aceptadas corresponde a 100, lo cual se verifica con la configuración propuesta.
+
+![](/assets/Ping-RateLimit-Nodelay.png)
 
 
 
