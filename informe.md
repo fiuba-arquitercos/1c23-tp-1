@@ -129,12 +129,18 @@ En este último gráfico se pueden notar ciertos picos en el consumo de memoria 
 ![](/assets/responseTimeResourcesPingLoading.jpeg)
 
 ### Metar
-
+Primero analizaremos el correspondiente escenario de Loading Test
 ![](/assets/scenarioMetarLoading.jpeg)
 
-![](/assets/responseTimeResourcesFactLoading.jpeg)
+![](/assets/responseTimeResourseMetarLoading.jpeg)
 
 ![](/assets/appResponseMetarLoading.jpeg)
+
+Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress Test
+
+![](/assets/metarStressScenario.jpeg)
+![](/assets/metarResourcesStress.jpeg)
+![](/assets/metarAppStress.jpeg)
 
 ### Caché
 Endpoints cacheados:
@@ -164,6 +170,10 @@ En cuando los recursos se observa que el uso de CPU coincide con el de las disti
 Ahora bien, si comparamos el Response Time de nuestra API con el de la API externa de Useless Fact, podemos ver que justamente en los casos en donde se llama al recurso externo es donde tenemos un mayor Response Time, mientras que en los demás casos, en donde el dato se encuentra en caché, el Response Time es muy bajo.
 ![](/assets/appFactLoading.jpeg)
 
+Por otro lado, al consumir este servicio durante el escenario de *Stress Test* se obtuvieron los siguientes resultados
+![](/assets/factScenarioStress.jpeg)
+![](/assets/factResourcesStress.jpeg)
+
 #### Space News
 A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
 
@@ -175,6 +185,21 @@ A continuación se muestran las estadísticas obtenidas con el escenario de *Loa
 
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
+
+Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
+
+#### 1 Nodo
+![](/assets/app-1-solo.png)
+En la imagen anterior se puede observar que el único nodo tiene un consumo de CPU promedio de 1.49% y un 0.189% de memoria
+
+### 3 Nodos
+![](/assets/app-1.png)
+![](/assets/app-2.png)
+![](/assets/app-3.png)
+
+Ahora bien, si analizamos los recursos utilizados para cada una de las tres réplicas podemos ver que el consumo de CPU baja considerablemente entre ambos casos, siendo el promedio menor al 0.5% para cada uno. Lo que indicaría una baja del uso de CPU casi al tercio del caso con un único servicio levantado.
+
+Por otro lado, el uso de memoria se mantuvo casi constante siendo 0.189% en el caso de un solo nodo, contra 0.165% aproximadamente en cada una de las réplicas.
 
 ### Rate Limiting
 Esta táctica es utilizada para limitar la cantidad de solicitudes que un usuario puede realizar en cierto período determinado. Para lograr dicho propósito se utilizó Nginx, cambiando las configuraciones para observar variaciones en las métricas.
