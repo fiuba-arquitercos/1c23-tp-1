@@ -51,10 +51,10 @@ Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a 
 
 ##### Escenario 1
 * Starting: durante el peridod de 30 segundos se realizan 4 request por segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 40  
+* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
 * Plain: durante el peridod de 60 segundos se realizan 40 request port segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 40 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
+* RampDown: durante el periodo de 30 segundos se realizan 50 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
 #### Fact
 
 * Starting: durante el peridod de 30 segundos se realizan 4 request por segundo 
@@ -65,10 +65,10 @@ Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a 
 
 #### Metar
 
-* Starting: durante el peridod de 20 segundos se realizan 2 request por segundo 
-* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 8  
-* Plain: durante el peridod de 45 segundos se realizan 8 request port segundo 
-* RampDown: durante el periodo de 20 segundos se realizan 8 request por segundo disminuyendo hasta llegar a 2 request por segundo 
+* Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
+* Plain: durante el peridod de 45 segundos se realizan 25 request por segundo 
+* RampDown: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
@@ -100,17 +100,17 @@ Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a 
 #### Metar
 
 * Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
-* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
-* Plain: durante el peridod de 45 segundos se realizan 25 request port segundo 
-* RampDown: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 120  
+* Plain: durante el peridod de 45 segundos se realizan 120 request port segundo 
+* RampDown: durante el periodo de 20 segundos se realizan 120 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
 
 * Starting: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
-* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 20  
-* Plain: durante el peridod de 60 segundos se realizan 20 request port segundo 
-* RampDown: durante el periodo de 30 segundos se realizan 20 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* RampUp: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18  
+* Plain: durante el peridod de 60 segundos se realizan 18 request port segundo 
+* RampDown: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 ## Tácticas
