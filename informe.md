@@ -129,12 +129,18 @@ En este último gráfico se pueden notar ciertos picos en el consumo de memoria 
 ![](/assets/responseTimeResourcesPingLoading.jpeg)
 
 ### Metar
-
+Primero analizaremos el correspondiente escenario de Loading Test
 ![](/assets/scenarioMetarLoading.jpeg)
 
-![](/assets/responseTimeResourcesFactLoading.jpeg)
+![](/assets/responseTimeResourseMetarLoading.jpeg)
 
 ![](/assets/appResponseMetarLoading.jpeg)
+
+Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress Test
+
+![](/assets/metarStressScenario.jpeg)
+![](/assets/metarResourcesStress.jpeg)
+![](/assets/metarAppStress.jpeg)
 
 ### Caché
 Endpoints cacheados:
@@ -163,6 +169,10 @@ En cuando los recursos se observa que el uso de CPU coincide con el de las disti
 
 Ahora bien, si comparamos el Response Time de nuestra API con el de la API externa de Useless Fact, podemos ver que justamente en los casos en donde se llama al recurso externo es donde tenemos un mayor Response Time, mientras que en los demás casos, en donde el dato se encuentra en caché, el Response Time es muy bajo.
 ![](/assets/appFactLoading.jpeg)
+
+Por otro lado, al consumir este servicio durante el escenario de *Stress Test* se obtuvieron los siguientes resultados
+![](/assets/factScenarioStress.jpeg)
+![](/assets/factResourcesStress.jpeg)
 
 #### Space News
 A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
