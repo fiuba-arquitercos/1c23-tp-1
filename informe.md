@@ -186,6 +186,21 @@ A continuación se muestran las estadísticas obtenidas con el escenario de *Loa
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
 
+Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
+
+#### 1 Nodo
+![](/assets/app-1-solo.png)
+En la imagen anterior se puede observar que el único nodo tiene un consumo de CPU promedio de 1.49% y un 0.189% de memoria
+
+### 3 Nodos
+![](/assets/app-1.png)
+![](/assets/app-2.png)
+![](/assets/app-3.png)
+
+Ahora bien, si analizamos los recursos utilizados para cada una de las tres réplicas podemos ver que el consumo de CPU baja considerablemente entre ambos casos, siendo el promedio menor al 0.5% para cada uno. Lo que indicaría una baja del uso de CPU casi al tercio del caso con un único servicio levantado.
+
+Por otro lado, el uso de memoria se mantuvo casi constante siendo 0.189% en el caso de un solo nodo, contra 0.165% aproximadamente en cada una de las réplicas.
+
 ### Rate Limiting
 Esta táctica es utilizada para limitar la cantidad de solicitudes que un usuario puede realizar en cierto período determinado. Para lograr dicho propósito se utilizó Nginx, cambiando las configuraciones para observar variaciones en las métricas.
 
