@@ -13,10 +13,10 @@ config:
   phases:
     - name: Starting
       duration: 30
-      arrivalRate: 20
+      arrivalRate: 10
     - name: Ramp
       duration: 30
-      arrivalRate: 20
+      arrivalRate: 10
       rampTo: 300
     - name: Plain
       duration: 60
@@ -24,8 +24,8 @@ config:
     - name: Ramp 
       duration: 30
       arrivalRate: 300
-      rampTo: 20
-    - name: Stop
+      rampTo: 10
+    - name: Ending
       duration: 30
       arrivalRate: 1
     

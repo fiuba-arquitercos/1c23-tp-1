@@ -25,7 +25,7 @@ config:
       duration: 30
       arrivalRate: 12
       rampTo: 4
-    - name: Stop
+    - name: Ending
       duration: 30
       arrivalRate: 1
     
