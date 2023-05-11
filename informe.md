@@ -24,6 +24,7 @@ En primer lugar se configuraron tanto docker-componse como Nginx para poder tene
 -  `/metar?station=<code>`: invoca al reporte del estado meteorológico que se registra en el aeródromo `station` (código OACI) proviente de [METAR](http://www.bom.gov.au/aviation/data/education/metar-speci.pdf), retornarnolo en formato JSON.
 -  `/space_news`: se devuelven los títulos de las últimas 5 noticias sobre actividad espacial de la API externa [Spaceflight News API](https://spaceflightnewsapi.net/).
 -  `/fact`: consume la API externa de [Useless Facts](https://uselessfacts.jsph.pl/) devolviendo así 1 (un) hecho sin utilidad
+- `/big_process`: Simulación de un proceso de gran cómputo. Utilizado para las tacticas opcionales.
 
 ## Vista Components & Connectors
 A continuación se muestra el diagrama de Vista de Componentes y Conectores para el caso base, es decir, de un solo nodo, y para el caso en donde se tienen 3 (tres) _Réplicas_ de la API.
@@ -135,6 +136,23 @@ Por otro lado, se define que en caso de que se haya superado la tasa de solicitu
 Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos observar como las requests son resueltas correctamente hasta casi llegando a la mitad de nuestra rampa ascendente, en donde la cantidad de solicitudes aceptadas corresponde a 100, lo cual se verifica con la configuración propuesta.
 
 ![](/assets/Ping-RateLimit-Nodelay.png)
+
+### Async Design - Request Reply Asincrónico (Opcional)
+Como tactica opcional elegimos *Async Design*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
+
+Se plantea resolver el problema del procesamiento sincrónico en caso de que varios clientes consuman dicho endpoint, el cual dejaría esperando a los clientes varios segundos hasta que el servidor pueda procesar todas las request pendientes de resolver.
+
+Para esto, `/big_process` retornará un ID de procesamiento.
+
+![](/assets/AsyncDesign-1.png)
+
+El ID obtenido podrá ser utilizado por los clientes puedan consultar el estado de su proceso hasta su finalización y obtener su resultado.
+
+#### AsyncDesign - Resultado Pendiente
+![](/assets/AsyncDesign-2.png)
+
+#### AsyncDesign - Resultado Terminado
+![](/assets/AsyncDesign-3.png)
 
 ## Cache
 
