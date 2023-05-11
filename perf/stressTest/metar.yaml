@@ -17,16 +17,16 @@ config:
     - name: RampUp
       duration: 20
       arrivalRate: 4
-      rampTo: 25
+      rampTo: 120
     - name: Plain
       duration: 45
-      arrivalRate: 25
+      arrivalRate: 120
     - name: RampDown 
       duration: 20
-      arrivalRate: 25
+      arrivalRate: 120
       rampTo: 4
     - name: Ending
-      duration: 25
+      duration: 20
       arrivalRate: 1
   variables:
     station:
