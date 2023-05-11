@@ -106,9 +106,9 @@ En estos casos se busca evaluar como se comporta el sistema con cargas más all�
 #### Space News
 
 * **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
-* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18  
-* **Plain**: durante el peridod de 60 segundos se realizan 18 request port segundo 
-* **RampDown**: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 80  
+* **Plain**: durante el peridod de 60 segundos se realizan 80 request port segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 80 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 ## Tácticas
