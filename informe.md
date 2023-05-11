@@ -88,18 +88,20 @@ En estos casos se busca evaluar como se comporta el sistema con cargas más all�
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Fact
-* **Starting**: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
-* **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 300 
-* **Plain**: durante el peridod de 60 segundos se realizan 300 request por segundo 
-* **RampDown**: durante el periodo de 30 segundos se realizan 300 request por segundo disminuyendo hasta llegar a 10 request por segundo 
-* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
+
+* Starting: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* RampUp: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 150 
+* Plain: durante el peridod de 60 segundos se realizan 150 request por segundo 
+* RampDown: durante el periodo de 30 segundos se realizan 150 request por segundo disminuyendo hasta llegar a 10 request por segundo 
+* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
-* **Starting**: durante el peridod de 20 segundos se realizan 4 request por segundo 
-* **RampUp**: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 120  
-* **Plain**: durante el peridod de 45 segundos se realizan 120 request port segundo 
-* **RampDown**: durante el periodo de 20 segundos se realizan 120 request por segundo disminuyendo hasta llegar a 4 request por segundo 
-* **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
+
+* Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 130  
+* Plain: durante el peridod de 45 segundos se realizan 130 request port segundo 
+* RampDown: durante el periodo de 20 segundos se realizan 130 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
 
@@ -127,12 +129,18 @@ En este último gráfico se pueden notar ciertos picos en el consumo de memoria 
 ![](/assets/responseTimeResourcesPingLoading.jpeg)
 
 ### Metar
-
+Primero analizaremos el correspondiente escenario de Loading Test
 ![](/assets/scenarioMetarLoading.jpeg)
 
-![](/assets/responseTimeResourcesFactLoading.jpeg)
+![](/assets/responseTimeResourseMetarLoading.jpeg)
 
 ![](/assets/appResponseMetarLoading.jpeg)
+
+Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress Test
+
+![](/assets/metarStressScenario.jpeg)
+![](/assets/metarResourcesStress.jpeg)
+![](/assets/metarAppStress.jpeg)
 
 ### Caché
 Endpoints cacheados:
@@ -150,13 +158,21 @@ La información se guarda por 10 segundos en el caso de `/space_news` y en el ca
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
 
 #### Fact
-A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
+A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*.
 
+Se puede observar como varían las fases de nuestro escenario y como todas las peticiones fueron procesadas de manera satisfactoria.
 ![](/assets/scenarioFactLoading.jpeg)
 
+Si analizamos los valores del Response Time se aprecia un valor medio de 9.34 ms en donde cada 30 segundos tenemos un pico. Esto se debe efectivamente a la manera en que configuramos Redis, por lo que se debe a instantes en donde la información no se encuentra cacheada o ha expirado.
+En cuando los recursos se observa que el uso de CPU coincide con el de las distintas fases de nuestro escenario, con un valor promedio de 0.952 %. 
 ![](/assets/responseTimeResourcesFactLoading.jpeg)
 
+Ahora bien, si comparamos el Response Time de nuestra API con el de la API externa de Useless Fact, podemos ver que justamente en los casos en donde se llama al recurso externo es donde tenemos un mayor Response Time, mientras que en los demás casos, en donde el dato se encuentra en caché, el Response Time es muy bajo.
 ![](/assets/appFactLoading.jpeg)
+
+Por otro lado, al consumir este servicio durante el escenario de *Stress Test* se obtuvieron los siguientes resultados
+![](/assets/factScenarioStress.jpeg)
+![](/assets/factResourcesStress.jpeg)
 
 #### Space News
 A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
@@ -203,22 +219,6 @@ El ID obtenido podrá ser utilizado por los clientes puedan consultar el estado 
 
 #### AsyncDesign - Resultado Terminado
 ![](/assets/AsyncDesign-3.png)
-
-## Cache
-
-Endpoints cacheados:
-* /space_news
-* /fact
-  
-En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
-
-La cantidad de items que se guardan en el cache son dos, ya que /space_news y /fact solo devuelven un valor.
-
-En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
-
-La información se guarda por 10 segundos en el caso de /space_news y en el caso de /fact 30 segundos. 
-
-Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
 
 ## Troubleshooting
 

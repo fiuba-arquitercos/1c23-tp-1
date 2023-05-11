@@ -17,13 +17,13 @@ config:
     - name: RampUp
       duration: 20
       arrivalRate: 4
-      rampTo: 120
+      rampTo: 130
     - name: Plain
       duration: 45
-      arrivalRate: 120
+      arrivalRate: 130
     - name: RampDown 
       duration: 20
-      arrivalRate: 120
+      arrivalRate: 130
       rampTo: 4
     - name: Ending
       duration: 20
