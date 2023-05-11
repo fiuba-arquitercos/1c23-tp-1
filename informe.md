@@ -183,6 +183,12 @@ A continuación se muestran las estadísticas obtenidas con el escenario de *Loa
 
 ![](/assets/appSpaceNewsLoading.jpeg)
 
+Si realizamos la misma táctica pero con los escenarios de estrés se obtiene lo siguiente
+
+![](/assets/space_newsStressScenario.jpeg)
+![](/assets/space_newsStressResources.jpeg)
+![](/assets/space_news_app_stress.jpeg)
+
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
 
