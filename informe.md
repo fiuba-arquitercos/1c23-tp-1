@@ -162,7 +162,6 @@ El ID obtenido podrá ser utilizado por los clientes puedan consultar el estado 
 
 #### AsyncDesign - Resultado Terminado
 ![](/assets/AsyncDesign-3.png)
-<<<<<<< HEAD
 
 ## Cache
 
@@ -250,5 +249,3 @@ Para esto, hay que actualizar la configuración del Panel para que tomen el data
 
 - El panel `resources` utiliza el Datasource `Graphite2`
 - El resto de los paneles utiliza el Datasource `Graphite`
-=======
->>>>>>> dac062a6a2be2e2bf72aeec70adfab72f1106240
