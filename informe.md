@@ -169,3 +169,74 @@ En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que 
 La información se guarda por 10 segundos en el caso de /space_news y en el caso de /fact 30 segundos. 
 
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
+
+## Troubleshooting
+
+Se han encontrado conflictos a la hora de registrar métricas en graphite enviadas desde las aplicaciones y cAdvisor al mismo tiempo. 
+
+Para solventar esto se ha optado por tener configurado en el entorno de docker 2 instancias de graphite, como se muestra en el codigo abajo:
+
+```
+    graphite:
+        image: graphiteapp/graphite-statsd:1.1.10-4
+        container_name: 1c23-tp-1-graphite-1
+        ports:
+            - "8090:80"
+            - "8125:8125/udp"
+            - "8126:8126"
+        volumes:
+            - ./statsd.config.js:/opt/statsd/config.js
+            - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+        networks:
+            - tp1_net
+
+    graphite2:
+        image: graphiteapp/graphite-statsd:1.1.10-4
+        container_name: 1c23-tp-1-graphite-2
+        ports:
+            - "8091:80"
+            - "9125:8125/udp"
+            - "9126:8126"
+        volumes:
+            - ./statsd.config.js:/opt/statsd/config.js
+            - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+        networks:
+            - tp1_net
+```
+
+Los componentes que envian metricas a la instancia `graphite` son
+- app-1
+- app-2
+- app-3
+- Artillery
+
+Mientras que `graphite2` recibe unicamente metricas de cAdvisor.
+
+Todas las métricas recolectadas podrán visualizarse en el mismo dashboard de **grafana**, para ello se debe tener configurado los datasource de la siguiente manera:
+
+![](/assets/Datasource_Grafana_Config.png)
+
+### Graphite
+![](/assets/Graphite_Config_Grafana.png)
+
+### Graphite2
+![](/assets/Graphite2_Config_Grafana.png)
+
+### Variables
+
+Se han ajustado las variables para poder coincidir los nombres de los contenedores de Docker
+
+![](/assets/Variables_Grafana_Config.png)
+
+![](/assets/Variables_Grafana_Config_2.png)
+
+### Asignación de Datasources
+
+Puede ocurrir que al momento de importar el Dashboard no se muestre data en ninguno de los Paneles.
+
+Para esto, hay que actualizar la configuración del Panel para que tomen el datasource correctamente
+
+![](/assets/Select_Datasource_Grafana_Config.png)
+
+- El panel `resources` utiliza el Datasource `Graphite2`
+- El resto de los paneles utiliza el Datasource `Graphite`
