@@ -116,21 +116,30 @@ En este caso se tiene la aplicación corriendo sin ninguna mejora adicional para
 
 #### Ping
 Se puede observar como varían las diferentes etapas del escenario correspondiente en el que todas las peticiones son procesadas de manera satisfactoria con un máximo de 500 solicitudes
-![](/assets/scenarioPingLoading.png)
+
+![](/assets/scenarioPingLoading.jpeg)
 
 A su vez, en los siguientes gráficos, se puede ver que el Response Time tiene una media de 7.5ms y un valor máximo de 725ms en las primeras peticiones, esto se debe a que la aplicación no había terminado de lanzarse, por lo que demora y genera, del lado del cliente, una sensación de que la consulta lleva un mayor tiempo.
 
 Por otro lado, el uso de memoria se mantiene casi constante mientras que el consumo de CPU sigue una distribución similar al escenario planteado. 
 En este último gráfico se pueden notar ciertos picos en el consumo de memoria durante la fase *Plain* que corresponden exactamente en los momentos en el que el Response Time también fue mayor. 
-![](/assets/responseTimeResourcesPingLoading.png)
 
+![](/assets/responseTimeResourcesPingLoading.jpeg)
+
+### Metar
+
+![](/assets/scenarioMetarLoading.jpeg)
+
+![](/assets/responseTimeResourcesFactLoading.jpeg)
+
+![](/assets/appResponseMetarLoading.jpeg)
 
 ### Caché
 Endpoints cacheados:
 * `/space_news`
 * `/fact`
   
-En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
+En el caso del endpoint `/metar`, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
 
 La cantidad de items que se guardan en el cache son dos, ya que `/space_news` y `/fact` solo devuelven un valor.
 
@@ -139,6 +148,24 @@ En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que 
 La información se guarda por 10 segundos en el caso de `/space_news` y en el caso de `/fact` 30 segundos. 
 
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
+
+#### Fact
+A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
+
+![](/assets/scenarioFactLoading.jpeg)
+
+![](/assets/responseTimeResourcesFactLoading.jpeg)
+
+![](/assets/appFactLoading.jpeg)
+
+#### Space News
+A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
+
+![](/assets/scenarioSpaceLoading.jpeg)
+
+![](/assets/responseTimeResourcesSNLoading.jpeg)
+
+![](/assets/appSpaceNewsLoading.jpeg)
 
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
