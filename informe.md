@@ -112,6 +112,18 @@ En estos casos se busca evaluar como se comporta el sistema con cargas más all�
 ## Tácticas
 
 ### Caso base
+En este caso se tiene la aplicación corriendo sin ninguna mejora adicional para poder utilizarla como comparación en las siguientes tácticas, además de familiarizarse con el entorno y las tecnologías.
+
+#### Ping
+Se puede observar como varían las diferentes etapas del escenario correspondiente en el que todas las peticiones son procesadas de manera satisfactoria con un máximo de 500 solicitudes
+![](/assets/scenarioPingLoading.png)
+
+A su vez, en los siguientes gráficos, se puede ver que el Response Time tiene una media de 7.5ms y un valor máximo de 725ms en las primeras peticiones, esto se debe a que la aplicación no había terminado de lanzarse, por lo que demora y genera, del lado del cliente, una sensación de que la consulta lleva un mayor tiempo.
+
+Por otro lado, el uso de memoria se mantiene casi constante mientras que el consumo de CPU sigue una distribución similar al escenario planteado. 
+En este último gráfico se pueden notar ciertos picos en el consumo de memoria durante la fase *Plain* que corresponden exactamente en los momentos en el que el Response Time también fue mayor. 
+![](/assets/responseTimeResourcesPingLoading.png)
+
 
 ### Caché
 Endpoints cacheados:
