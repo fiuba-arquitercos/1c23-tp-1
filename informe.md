@@ -27,10 +27,10 @@ En primer lugar se configuraron tanto docker-componse como Nginx para poder tene
 
 ## Vista Components & Connectors
 ### Caso Base
-`![](/assets/VCC_Base.png)`
+![](/assets/VCC_Base.png)
 
 ### Caso con Replicación
-
+![](/assets/VCC_Replicacion.png)
 
 
 
