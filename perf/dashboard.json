@@ -24,14 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "fieldConfig": {
         "defaults": {
@@ -108,7 +108,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "A",
           "target": "stats.timers.app.endpoint.fact.response_time.mean"
@@ -120,7 +120,7 @@
     {
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "fieldConfig": {
         "defaults": {
@@ -197,7 +197,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "A",
           "target": "stats.timers.api.fact.response_time.mean"
@@ -209,7 +209,7 @@
     {
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "fieldConfig": {
         "defaults": {
@@ -311,7 +311,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "A",
           "target": "stats.timers.app.endpoint.space_news.response_time.mean"
@@ -323,7 +323,7 @@
     {
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "fieldConfig": {
         "defaults": {
@@ -400,7 +400,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "A",
           "target": "stats.timers.api.space_news.response_time.mean"
@@ -412,7 +412,7 @@
     {
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "description": "",
       "fieldConfig": {
@@ -490,7 +490,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "A",
           "target": "stats.timers.app.endpoint.metar.response_time.mean"
@@ -506,7 +506,7 @@
       "dashes": false,
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "fill": 7,
       "fillGradient": 0,
@@ -552,7 +552,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refCount": 0,
           "refId": "B",
@@ -605,7 +605,7 @@
       "dashes": false,
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "fill": 7,
       "fillGradient": 0,
@@ -651,7 +651,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "B",
           "target": "alias(sumSeries(stats.gauges.$server.errors.*), 'Errored')",
@@ -660,7 +660,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "A",
           "target": "alias(stats.gauges.$server.codes.200, 'Completed')"
@@ -668,7 +668,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "C",
           "target": "alias(stats.gauges.$server.pendingRequests, 'Pending')"
@@ -676,7 +676,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refId": "D",
           "target": "alias(stats.gauges.$server.codes.429, 'Limited')"
@@ -719,7 +719,7 @@
       "dashes": false,
       "datasource": {
         "type": "graphite",
-        "uid": "0bjdHS84k"
+        "uid": "mT2LLH8Vz"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -766,7 +766,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refCount": 0,
           "refId": "C",
@@ -775,7 +775,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "0bjdHS84k"
+            "uid": "mT2LLH8Vz"
           },
           "refCount": 0,
           "refId": "B",
@@ -823,7 +823,7 @@
       "dashes": false,
       "datasource": {
         "type": "graphite",
-        "uid": "laHdDS84k"
+        "uid": "Db-ELN8Vz"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -876,7 +876,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "laHdDS84k"
+            "uid": "Db-ELN8Vz"
           },
           "hide": false,
           "refCount": 0,
@@ -887,7 +887,7 @@
         {
           "datasource": {
             "type": "graphite",
-            "uid": "laHdDS84k"
+            "uid": "Db-ELN8Vz"
           },
           "hide": false,
           "refCount": 0,
@@ -956,9 +956,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "1c23-tp-1_node_1",
-          "value": "1c23-tp-1_node_1"
+          "selected": true,
+          "text": "1c23-tp-1-app-1",
+          "value": "1c23-tp-1-app-1"
         },
         "hide": 0,
         "includeAll": false,
@@ -1019,8 +1019,8 @@
     ]
   },
   "time": {
-    "from": "2023-05-10T22:59:33.726Z",
-    "to": "2023-05-10T22:59:43.299Z"
+    "from": "now-15m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -1050,6 +1050,6 @@
   "timezone": "",
   "title": "Main dashboard",
   "uid": "arxIPammk",
-  "version": 4,
+  "version": 2,
   "weekStart": ""
 }
