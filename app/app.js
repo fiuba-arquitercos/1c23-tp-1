@@ -56,7 +56,7 @@ async function process_fact() {
       const factsInfo = factsRes.data;
       console.log('Data: ', factsInfo);
       let fact = factsInfo['text'];
-      redisClient.set('fact', JSON.stringify(fact), {EX: 10}).then(() => {console.log("Cached fact")}); 
+      redisClient.set('fact', JSON.stringify(fact), {EX: 30}).then(() => {console.log("Cached fact")}); 
       return fact
 
     }catch (err) {
@@ -134,48 +134,36 @@ async function process_metar_request(req) {
 
   let response_message;
   const codeStation = req.query.station;
-  let metarKeyString = 'metar_' + (codeStation !== undefined? codeStation:'no_param');
-  console.log(metarKeyString);
-  let metarString = await redisClient.get(metarKeyString);
   
-  if (metarString !== null) {
-    console.log("could get cached metar");
-    response_message = JSON.parse(metarString);
-  
-  } else {
     const parser = new XMLParser();
   
-    try {
-      const startTime = performance.now();
-      let metarRes = await axios.get(`https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${codeStation}&hoursBeforeNow=1`)
-      const endTime = performance.now();
-      statsd_client.timing('api.metar.response_time', startTime - endTime);
-      
-      
-      const parsed = parser.parse(metarRes.data);
+  try {
+    const startTime = performance.now();
+    let metarRes = await axios.get(`https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${codeStation}&hoursBeforeNow=1`)
+    const endTime = performance.now();
+    statsd_client.timing('api.metar.response_time', startTime - endTime);
   
-      if(parsed.response.data.hasOwnProperty('METAR')){
-          const metarInfos = parsed.response.data.METAR;
-          console.log(metarInfos)
-          console.log(typeof metarInfos)
-          if (metarInfos.hasOwnProperty('raw_text')){
-            response_message = decode(metarInfos.raw_text);
-          } else {
-            response_message = metarInfos.map((metarInfo) => decode(metarInfo.raw_text));
-          }
-            
-        } else {
-          response_message = "Metar devolvio vacio para ese aeródromo";
-        }
-  
-    } catch (err) {
-      console.log('Error: ', err.message);
-      response_message = err.message;
-    }
-  
-    redisClient.set(metarKeyString, JSON.stringify(response_message), {EX: 10}).then(() => {console.log("Cached results")});
-  }
+    const parsed = parser.parse(metarRes.data);
 
+    if(parsed.response.data.hasOwnProperty('METAR')){
+        const metarInfos = parsed.response.data.METAR;
+        console.log(metarInfos)
+        console.log(typeof metarInfos)
+        if (metarInfos.hasOwnProperty('raw_text')){
+          response_message = decode(metarInfos.raw_text);
+        } else {
+          response_message = metarInfos.map((metarInfo) => decode(metarInfo.raw_text));
+        }
+          
+      } else {
+        response_message = "Metar devolvio vacio para ese aeródromo";
+      }
+
+  } catch (err) {
+    console.log('Error: ', err.message);
+    response_message = err.message;
+  }
+  
   return response_message;
 }
 
