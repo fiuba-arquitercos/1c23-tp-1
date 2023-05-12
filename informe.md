@@ -144,16 +144,14 @@ Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress 
 
 ### Caché
 Endpoints cacheados:
-* `/space_news`
-* `/fact`
+* /space_news
   
-En el caso del endpoint `/metar`, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
+En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. Y en el caso de /fact, no se cachea porque siempre debe devolverse un fact distinto salvo que lo repita la api. 
 
-La cantidad de items que se guardan en el cache son dos, ya que `/space_news` y `/fact` solo devuelven un valor.
-
+La cantidad de items que se guardan en el cache son 5 ya que son los titulos de las últimas 5 noticias que devuelve la api. 
 En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
 
-La información se guarda por 10 segundos en el caso de `/space_news` y en el caso de `/fact` 30 segundos. 
+La información se guarda por 10 segundos en el caso de `/space_news`. 
 
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
 
@@ -240,6 +238,7 @@ Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos ob
 
 ### Async Design & Concurrency - Request Reply Asincrónico (Opcional)
 Como tácticas opcionales elegimos *Async Design* y *Concurrency*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
+
 
 Se plantea resolver el problema del procesamiento sincrónico de un proceso pesado donde varios clientes consuman dicho endpoint, el cual dejaría esperando a los clientes varios segundos hasta que el servidor pueda procesar todas las request pendientes de resolver. Además, cuantos mas usuarios paralelamente consuman este servicio, mas demoraría en responder.
 
