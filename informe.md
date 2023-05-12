@@ -24,6 +24,7 @@ En primer lugar se configuraron tanto docker-componse como Nginx para poder tene
 -  `/metar?station=<code>`: invoca al reporte del estado meteorológico que se registra en el aeródromo `station` (código OACI) proviente de [METAR](http://www.bom.gov.au/aviation/data/education/metar-speci.pdf), retornarnolo en formato JSON.
 -  `/space_news`: se devuelven los títulos de las últimas 5 noticias sobre actividad espacial de la API externa [Spaceflight News API](https://spaceflightnewsapi.net/).
 -  `/fact`: consume la API externa de [Useless Facts](https://uselessfacts.jsph.pl/) devolviendo así 1 (un) hecho sin utilidad
+- `/big_process`: Simulación de un proceso de gran cómputo. Utilizado para las tacticas opcionales.
 
 ## Vista Components & Connectors
 A continuación se muestra el diagrama de Vista de Componentes y Conectores para el caso base, es decir, de un solo nodo, y para el caso en donde se tienen 3 (tres) _Réplicas_ de la API.
@@ -45,32 +46,164 @@ Decidimos realizar dos grandes grupos de cargas de trabajo, los denominados _Loa
 
 ### Loading Test
 
+Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a un valor umbral
 #### Ping
 
+##### Escenario 1
+* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
+* **Plain**: durante el peridod de 60 segundos se realizan 40 request port segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 50 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
+
 #### Fact
+* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18 request por segundo 
+* **Plain**: durante el peridod de 60 segundos se realizan 18 request por segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
+* **Starting**: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* **RampUp**: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
+* **Plain**: durante el peridod de 45 segundos se realizan 25 request por segundo 
+* **RampDown**: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
+* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 10 
+* **Plain**: durante el peridod de 60 segundos se realizan 10 request port segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 10 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 ### Stress Test
+En estos casos se busca evaluar como se comporta el sistema con cargas más allá de su capacidad normal de operación, con la finalidad de verificar si el sistema es capaz de manejar situaciones de picos de tráfico o grandes volúmenes de datos.
 
 #### Ping
+* **Starting**: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 400 
+* **Plain**: durante el peridod de 60 segundos se realizan 400 request por segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 400 request por segundo disminuyendo hasta llegar a 10 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Fact
 
+* Starting: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* RampUp: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 150 
+* Plain: durante el peridod de 60 segundos se realizan 150 request por segundo 
+* RampDown: durante el periodo de 30 segundos se realizan 150 request por segundo disminuyendo hasta llegar a 10 request por segundo 
+* Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
+
 #### Metar
 
+* Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 130  
+* Plain: durante el peridod de 45 segundos se realizan 130 request port segundo 
+* RampDown: durante el periodo de 20 segundos se realizan 130 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
+
 #### Space News
+
+* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 80  
+* **Plain**: durante el peridod de 60 segundos se realizan 80 request port segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 80 request por segundo disminuyendo hasta llegar a 4 request por segundo 
+* **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 ## Tácticas
 
 ### Caso base
+En este caso se tiene la aplicación corriendo sin ninguna mejora adicional para poder utilizarla como comparación en las siguientes tácticas, además de familiarizarse con el entorno y las tecnologías.
+
+#### Ping
+Se puede observar como varían las diferentes etapas del escenario correspondiente en el que todas las peticiones son procesadas de manera satisfactoria con un máximo de 500 solicitudes
+
+![](/assets/scenarioPingLoading.jpeg)
+
+A su vez, en los siguientes gráficos, se puede ver que el Response Time tiene una media de 7.5ms y un valor máximo de 725ms en las primeras peticiones, esto se debe a que la aplicación no había terminado de lanzarse, por lo que demora y genera, del lado del cliente, una sensación de que la consulta lleva un mayor tiempo.
+
+Por otro lado, el uso de memoria se mantiene casi constante mientras que el consumo de CPU sigue una distribución similar al escenario planteado. 
+En este último gráfico se pueden notar ciertos picos en el consumo de memoria durante la fase *Plain* que corresponden exactamente en los momentos en el que el Response Time también fue mayor. 
+
+![](/assets/responseTimeResourcesPingLoading.jpeg)
+
+### Metar
+Primero analizaremos el correspondiente escenario de Loading Test
+![](/assets/scenarioMetarLoading.jpeg)
+
+![](/assets/responseTimeResourseMetarLoading.jpeg)
+
+![](/assets/appResponseMetarLoading.jpeg)
+
+Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress Test
+
+![](/assets/metarStressScenario.jpeg)
+![](/assets/metarResourcesStress.jpeg)
+![](/assets/metarAppStress.jpeg)
 
 ### Caché
+Endpoints cacheados:
+* /space_news
+  
+En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. Y en el caso de /fact, no se cachea porque siempre debe devolverse un fact distinto salvo que lo repita la api. 
+
+La cantidad de items que se guardan en el cache son 5 ya que son los titulos de las últimas 5 noticias que devuelve la api. 
+En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
+
+La información se guarda por 10 segundos en el caso de `/space_news`. 
+
+Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
+
+#### Fact
+A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*.
+
+Se puede observar como varían las fases de nuestro escenario y como todas las peticiones fueron procesadas de manera satisfactoria.
+![](/assets/scenarioFactLoading.jpeg)
+
+Si analizamos los valores del Response Time se aprecia un valor medio de 9.34 ms en donde cada 30 segundos tenemos un pico. Esto se debe efectivamente a la manera en que configuramos Redis, por lo que se debe a instantes en donde la información no se encuentra cacheada o ha expirado.
+En cuando los recursos se observa que el uso de CPU coincide con el de las distintas fases de nuestro escenario, con un valor promedio de 0.952 %. 
+![](/assets/responseTimeResourcesFactLoading.jpeg)
+
+Ahora bien, si comparamos el Response Time de nuestra API con el de la API externa de Useless Fact, podemos ver que justamente en los casos en donde se llama al recurso externo es donde tenemos un mayor Response Time, mientras que en los demás casos, en donde el dato se encuentra en caché, el Response Time es muy bajo.
+![](/assets/appFactLoading.jpeg)
+
+Por otro lado, al consumir este servicio durante el escenario de *Stress Test* se obtuvieron los siguientes resultados
+![](/assets/factScenarioStress.jpeg)
+![](/assets/factResourcesStress.jpeg)
+
+#### Space News
+A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
+
+![](/assets/scenarioSpaceLoading.jpeg)
+
+![](/assets/responseTimeResourcesSNLoading.jpeg)
+
+![](/assets/appSpaceNewsLoading.jpeg)
+
+Si realizamos la misma táctica pero con los escenarios de estrés se obtiene lo siguiente
+
+![](/assets/space_newsStressScenario.jpeg)
+![](/assets/space_newsStressResources.jpeg)
+![](/assets/space_news_app_stress.jpeg)
 
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
+
+Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
+
+#### 1 Nodo
+![](/assets/app-1-solo.png)
+En la imagen anterior se puede observar que el único nodo tiene un consumo de CPU promedio de 1.49% y un 0.189% de memoria
+
+### 3 Nodos
+![](/assets/app-1.png)
+![](/assets/app-2.png)
+![](/assets/app-3.png)
+
+Ahora bien, si analizamos los recursos utilizados para cada una de las tres réplicas podemos ver que el consumo de CPU baja considerablemente entre ambos casos, siendo el promedio menor al 0.5% para cada uno. Lo que indicaría una baja del uso de CPU casi al tercio del caso con un único servicio levantado.
+
+Por otro lado, el uso de memoria se mantuvo casi constante siendo 0.189% en el caso de un solo nodo, contra 0.165% aproximadamente en cada una de las réplicas.
 
 ### Rate Limiting
 Esta táctica es utilizada para limitar la cantidad de solicitudes que un usuario puede realizar en cierto período determinado. Para lograr dicho propósito se utilizó Nginx, cambiando las configuraciones para observar variaciones en las métricas.
@@ -87,17 +220,93 @@ Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos ob
 
 ![](/assets/Ping-RateLimit-Nodelay.png)
 
-## Cache
+### Async Design & Concurrency - Request Reply Asincrónico (Opcional)
+Como tácticas opcionales elegimos *Async Design* y *Concurrency*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
 
-Endpoints cacheados:
-* /space_news
-  
-En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. Y en el caso de /fact, no se cachea porque siempre debe devolverse un fact distinto salvo que lo repita la api. 
 
-La cantidad de items que se guardan en el cache son 5 ya que son los titulos de las últimas 5 noticias que devuelve la api. 
+Se plantea resolver el problema del procesamiento sincrónico de un proceso pesado donde varios clientes consuman dicho endpoint, el cual dejaría esperando a los clientes varios segundos hasta que el servidor pueda procesar todas las request pendientes de resolver. Además, cuantos mas usuarios paralelamente consuman este servicio, mas demoraría en responder.
 
-En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
+A travéz de estas tácticas se pretende mejorar los atributos de calidad `Scalability` y `Performance`.
 
-La información de /space_news se guarda por 10 segundos.
+Para esto, `/big_process` retornará un ID de procesamiento.
 
-Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
+![](/assets/AsyncDesign-1.png)
+
+El ID obtenido podrá ser utilizado por los clientes puedan consultar el estado de su proceso hasta su finalización y obtener su resultado.
+
+#### AsyncDesign - Resultado Pendiente
+![](/assets/AsyncDesign-2.png)
+
+#### AsyncDesign - Resultado Terminado
+![](/assets/AsyncDesign-3.png)
+
+## Troubleshooting
+
+Se han encontrado conflictos a la hora de registrar métricas en graphite enviadas desde las aplicaciones y cAdvisor al mismo tiempo. 
+
+Para solventar esto se ha optado por tener configurado en el entorno de docker 2 instancias de graphite, como se muestra en el codigo abajo:
+
+```
+    graphite:
+        image: graphiteapp/graphite-statsd:1.1.10-4
+        container_name: 1c23-tp-1-graphite-1
+        ports:
+            - "8090:80"
+            - "8125:8125/udp"
+            - "8126:8126"
+        volumes:
+            - ./statsd.config.js:/opt/statsd/config.js
+            - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+        networks:
+            - tp1_net
+
+    graphite2:
+        image: graphiteapp/graphite-statsd:1.1.10-4
+        container_name: 1c23-tp-1-graphite-2
+        ports:
+            - "8091:80"
+            - "9125:8125/udp"
+            - "9126:8126"
+        volumes:
+            - ./statsd.config.js:/opt/statsd/config.js
+            - ./graphite.storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+        networks:
+            - tp1_net
+```
+
+Los componentes que envian metricas a la instancia `graphite` son
+- app-1
+- app-2
+- app-3
+- Artillery
+
+Mientras que `graphite2` recibe unicamente metricas de cAdvisor.
+
+Todas las métricas recolectadas podrán visualizarse en el mismo dashboard de **grafana**, para ello se debe tener configurado los datasource de la siguiente manera:
+
+![](/assets/Datasource_Grafana_Config.png)
+
+### Graphite
+![](/assets/Graphite_Config_Grafana.png)
+
+### Graphite2
+![](/assets/Graphite2_Config_Grafana.png)
+
+### Variables
+
+Se han ajustado las variables para poder coincidir los nombres de los contenedores de Docker
+
+![](/assets/Variables_Grafana_Config.png)
+
+![](/assets/Variables_Grafana_Config_2.png)
+
+### Asignación de Datasources
+
+Puede ocurrir que al momento de importar el Dashboard no se muestre data en ninguno de los Paneles.
+
+Para esto, hay que actualizar la configuración del Panel para que tomen el datasource correctamente
+
+![](/assets/Select_Datasource_Grafana_Config.png)
+
+- El panel `resources` utiliza el Datasource `Graphite2`
+- El resto de los paneles utiliza el Datasource `Graphite`
