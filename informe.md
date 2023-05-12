@@ -239,6 +239,10 @@ Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos ob
 
 ![](/assets/Ping-RateLimit-Nodelay.png)
 
+Esta táctica afecta considerablemente al atributo de calidad de `Availability` ya que al limitar la cantidad de solicitudes que se procesan evita que el sistema se sobrecargue y se caiga, es decir, deje de estar disponible.
+
+A su vez mejora el atributo de `Security` debido a que ayuda a prevenir ataques de denegación de servicio (DoS) y de otros tipos ataque que buscar sobrecargar al sistema mediante ráfagas de solicitudes.
+
 ### Async Design & Concurrency - Request Reply Asincrónico (Opcional)
 Como tácticas opcionales elegimos *Async Design* y *Concurrency*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
 
