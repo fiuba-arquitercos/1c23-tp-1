@@ -10,7 +10,7 @@
 
 ## Objetivo
 El presente trabajo consiste en la implmentación de un servicio HTPP en Node.js-Express que represente una API para poder 
-evaluar el impacto en los atributos de calidad mediante la comparaciónde diversas tecnologías. Estas tecnologías a utilizar son muy populares y de uso común en la industria, como lo son Node.js, Docker, Docker Compose, Nginx, Graphite, Grafana, Artillery, entre otras.
+evaluar el impacto en los atributos de calidad mediante la comparación de diversas tecnologías. Estas tecnologías a utilizar son muy populares y de uso común en la industria, como lo son Node.js, Docker, Docker Compose, Nginx, Graphite, Grafana, Artillery, entre otras.
 Lo que permite un primer pantallazo en el uso de estas herramientas y el aprendizaje de las mejores prácticas para la medición y visualización de datos.
 
 Dicha API a su vez consume las siguientes APIs externas para dar información a los usuarios:
@@ -19,7 +19,7 @@ Dicha API a su vez consume las siguientes APIs externas para dar información a 
 - [Useless Facts](https://uselessfacts.jsph.pl/)
 
 ## Servicios 
-En primer lugar se configuraron tanto docker-componse como Nginx para poder tener la aplicación corriendo en `localhost:5555/api` con los siguientes servicios:
+En primer lugar se configuraron tanto docker-compose como Nginx para poder tener la aplicación corriendo en `localhost:5555/api` con los siguientes servicios:
 -  `/ping`: Healthcheck que devuelve siempre un valor constante, sin procesamiento alguno
 -  `/metar?station=<code>`: invoca al reporte del estado meteorológico que se registra en el aeródromo `station` (código OACI) proviente de [METAR](http://www.bom.gov.au/aviation/data/education/metar-speci.pdf), retornarnolo en formato JSON.
 -  `/space_news`: se devuelven los títulos de las últimas 5 noticias sobre actividad espacial de la API externa [Spaceflight News API](https://spaceflightnewsapi.net/).
@@ -146,18 +146,6 @@ Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress 
 ![](/assets/metarResourcesStress.jpeg)
 ![](/assets/metarAppStress.jpeg)
 
-### Caché
-Endpoints cacheados:
-* /space_news
-  
-En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. Y en el caso de /fact, no se cachea porque siempre debe devolverse un fact distinto salvo que lo repita la api. 
-
-La cantidad de items que se guardan en el cache son 5 ya que son los titulos de las últimas 5 noticias que devuelve la api. 
-En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
-
-La información se guarda por 10 segundos en el caso de `/space_news`. 
-
-Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
 
 #### Fact
 A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*.
@@ -175,6 +163,20 @@ Ahora bien, si comparamos el Response Time de nuestra API con el de la API exter
 Por otro lado, al consumir este servicio durante el escenario de *Stress Test* se obtuvieron los siguientes resultados
 ![](/assets/factScenarioStress.jpeg)
 ![](/assets/factResourcesStress.jpeg)
+
+### Caché
+Endpoints cacheados:
+* /space_news
+  
+En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. Y en el caso de /fact, no se cachea porque siempre debe devolverse un fact distinto salvo que lo repita la api. 
+
+La cantidad de items que se guardan en el cache son 5 ya que son los titulos de las últimas 5 noticias que devuelve la api. 
+En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
+
+La información se guarda por 10 segundos en el caso de `/space_news`. 
+
+Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
+
 
 #### Space News
 A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
