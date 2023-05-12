@@ -187,6 +187,9 @@ Si realizamos la misma táctica pero con los escenarios de estrés se obtiene lo
 ![](/assets/space_newsStressResources.jpeg)
 ![](/assets/space_news_app_stress.jpeg)
 
+Podemos observar que tenemos picos en los tiempos de respuestas. En el gráfico de `APP endpoint de space news` vemos que hay mas metricas a medida que pasa el tiempo que en el caso del grafico de `API externa de space news` y esto ocurre porque cacheamos la información, haciendo menos requests a la api externa. Podemos ver que hay una diferencia de al menos 1000 ms en los tiempos de respuesta.  
+El primer valor de respuesta tomado en el endpoint de la app es cercano a 1000 ms y este es el primer caso en el que no tenemos la info cacheada. Luego, en los tiempos en los que es cercano a cero, la info se fue obteniendo de la cache. Podemos ver que disminuye significativamente el tiempo de respuesta.
+
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
 
