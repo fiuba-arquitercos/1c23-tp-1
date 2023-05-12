@@ -49,7 +49,6 @@ Decidimos realizar dos grandes grupos de cargas de trabajo, los denominados _Loa
 Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a un valor umbral
 #### Ping
 
-##### Escenario 1
 * **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
 * **Plain**: durante el peridod de 60 segundos se realizan 40 request port segundo 
@@ -82,9 +81,9 @@ En estos casos se busca evaluar como se comporta el sistema con cargas más all�
 
 #### Ping
 * **Starting**: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
-* **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 400 
-* **Plain**: durante el peridod de 60 segundos se realizan 400 request por segundo 
-* **RampDown**: durante el periodo de 30 segundos se realizan 400 request por segundo disminuyendo hasta llegar a 10 request por segundo 
+* **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 180 
+* **Plain**: durante el peridod de 60 segundos se realizan 180 request por segundo 
+* **RampDown**: durante el periodo de 30 segundos se realizan 180 request por segundo disminuyendo hasta llegar a 10 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Fact
@@ -127,6 +126,11 @@ Por otro lado, el uso de memoria se mantiene casi constante mientras que el cons
 En este último gráfico se pueden notar ciertos picos en el consumo de memoria durante la fase *Plain* que corresponden exactamente en los momentos en el que el Response Time también fue mayor. 
 
 ![](/assets/responseTimeResourcesPingLoading.jpeg)
+
+Ahora bien, veamos el caso en que realiza una prueba de stress 
+
+![](/assets/pingStressScenario.jpeg)
+![](/assets/pingStressResources.jpeg)
 
 ### Metar
 Primero analizaremos el correspondiente escenario de Loading Test
