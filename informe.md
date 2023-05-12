@@ -207,6 +207,22 @@ Ahora bien, si analizamos los recursos utilizados para cada una de las tres rép
 
 Por otro lado, el uso de memoria se mantuvo casi constante siendo 0.189% en el caso de un solo nodo, contra 0.165% aproximadamente en cada una de las réplicas.
 
+### 2 Nodos - 1 Nodo caido
+
+Realizamos una prueba forzando la caida de un nodo (app-2) para analizar el comportamiento del Load Balancer del `nginx` y ver cómo impacta en la resolución de las request.
+
+Previamente se corrió una prueba de stress sobre el endpoint `space_news` para tener de referencia el tiempo de respuesta y la cantidad de request completados y con errores
+
+![](/assets/load_balancer_all_instances.png)
+
+Luego, apagando la instancia `app-2`, volvió a correrse la misma prueba obteniendo el siguiente resultado
+
+![](/assets/load_balancer_two_instances.png)
+
+Se puede observar un resultado similar, por lo que entendemos que `nginx` realiza un buen trabajo para mantener la disponibilidad del sistema balanceando la carga a las instancias activas. De no ser así, como balancea la carga de manera Round Robin, al menos 1/3 de las request deberian haber fallado al tratar de enviarlas a la instancia `app-2`.
+
+Por todo esto, concluimos que la tactica de **Replicacion** mejora la `Availability` y la `Performance`.
+
 ### Rate Limiting
 Esta táctica es utilizada para limitar la cantidad de solicitudes que un usuario puede realizar en cierto período determinado. Para lograr dicho propósito se utilizó Nginx, cambiando las configuraciones para observar variaciones en las métricas.
 
