@@ -49,30 +49,30 @@ Decidimos realizar dos grandes grupos de cargas de trabajo, los denominados _Loa
 Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a un valor umbral
 #### Ping
 
-* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
-* **Plain**: durante el peridod de 60 segundos se realizan 40 request port segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 40 request port segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 50 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Fact
-* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18 request por segundo 
-* **Plain**: durante el peridod de 60 segundos se realizan 18 request por segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 18 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
-* **Starting**: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* **Starting**: durante el perido de 20 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
-* **Plain**: durante el peridod de 45 segundos se realizan 25 request por segundo 
+* **Plain**: durante el perido de 45 segundos se realizan 25 request por segundo 
 * **RampDown**: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
-* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 10 
-* **Plain**: durante el peridod de 60 segundos se realizan 10 request port segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 10 request port segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 10 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
@@ -80,23 +80,23 @@ Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a 
 En estos casos se busca evaluar como se comporta el sistema con cargas más allá de su capacidad normal de operación, con la finalidad de verificar si el sistema es capaz de manejar situaciones de picos de tráfico o grandes volúmenes de datos.
 
 #### Ping
-* **Starting**: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 10 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 180 
-* **Plain**: durante el peridod de 60 segundos se realizan 180 request por segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 180 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 180 request por segundo disminuyendo hasta llegar a 10 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Fact
 
-* Starting: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* Starting: durante el perido de 30 segundos se realizan 10 requestpor segundo 
 * RampUp: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 150 
-* Plain: durante el peridod de 60 segundos se realizan 150 request por segundo 
+* Plain: durante el perido de 60 segundos se realizan 150 request por segundo 
 * RampDown: durante el periodo de 30 segundos se realizan 150 request por segundo disminuyendo hasta llegar a 10 request por segundo 
 * Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
 
-* Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* Starting: durante el perido de 20 segundos se realizan 4 request por segundo 
 * RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 130  
 * Plain: durante el peridod de 45 segundos se realizan 130 request port segundo 
 * RampDown: durante el periodo de 20 segundos se realizan 130 request por segundo disminuyendo hasta llegar a 4 request por segundo 
@@ -104,9 +104,9 @@ En estos casos se busca evaluar como se comporta el sistema con cargas más all�
 
 #### Space News
 
-* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 80  
-* **Plain**: durante el peridod de 60 segundos se realizan 80 request port segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 80 request port segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 80 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
@@ -146,23 +146,13 @@ Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress 
 ![](/assets/metarResourcesStress.jpeg)
 ![](/assets/metarAppStress.jpeg)
 
+### Space News
+Si en la presente táctica corremos el escenario de Loading Test para el servicio de Space News obtenemos lo siguiente:
+![](/assets/spacenews_sinCache_Loading.jpeg)
 
-#### Fact
-A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*.
+Podemos observar que a partir de la fase plana en donde tiene mayor tasa de peticiones, el servicio comienza a fallar, y mantiene un promedio de 53.8 de request con dicho estado.
 
-Se puede observar como varían las fases de nuestro escenario y como todas las peticiones fueron procesadas de manera satisfactoria.
-![](/assets/scenarioFactLoading.jpeg)
-
-Si analizamos los valores del Response Time se aprecia un valor medio de 9.34 ms en donde cada 30 segundos tenemos un pico. Esto se debe efectivamente a la manera en que configuramos Redis, por lo que se debe a instantes en donde la información no se encuentra cacheada o ha expirado.
-En cuando los recursos se observa que el uso de CPU coincide con el de las distintas fases de nuestro escenario, con un valor promedio de 0.952 %. 
-![](/assets/responseTimeResourcesFactLoading.jpeg)
-
-Ahora bien, si comparamos el Response Time de nuestra API con el de la API externa de Useless Fact, podemos ver que justamente en los casos en donde se llama al recurso externo es donde tenemos un mayor Response Time, mientras que en los demás casos, en donde el dato se encuentra en caché, el Response Time es muy bajo.
-![](/assets/appFactLoading.jpeg)
-
-Por otro lado, al consumir este servicio durante el escenario de *Stress Test* se obtuvieron los siguientes resultados
-![](/assets/factScenarioStress.jpeg)
-![](/assets/factResourcesStress.jpeg)
+Por otro lado el Response Time medio es un valor grande (7.13 segundos aproximadamente).
 
 ### Caché
 Endpoints cacheados:
@@ -176,7 +166,6 @@ En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que 
 La información se guarda por 10 segundos en el caso de `/space_news`. 
 
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
-
 
 #### Space News
 A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
@@ -194,12 +183,17 @@ Si realizamos la misma táctica pero con los escenarios de estrés se obtiene lo
 ![](/assets/space_news_app_stress.jpeg)
 
 Podemos observar que tenemos picos en los tiempos de respuestas. En el gráfico de `APP endpoint de space news` vemos que hay mas metricas a medida que pasa el tiempo que en el caso del grafico de `API externa de space news` y esto ocurre porque cacheamos la información, haciendo menos requests a la api externa. Podemos ver que hay una diferencia de al menos 1000 ms en los tiempos de respuesta.  
-El primer valor de respuesta tomado en el endpoint de la app es cercano a 1000 ms y este es el primer caso en el que no tenemos la info cacheada. Luego, en los tiempos en los que es cercano a cero, la info se fue obteniendo de la cache. Podemos ver que disminuye significativamente el tiempo de respuesta.
+
+El primer valor de respuesta tomado en el endpoint de la app es cercano a 1000 ms y este es el primer caso en el que no tenemos la info cacheada. Luego, en los tiempos en los que es cercano a cero, la info se fue obteniendo de la cache. Podemos ver que disminuye significativamente el tiempo de respuesta mejorando asi la `Performance`.
+
+Si lo comparamos con la táctica base, es decir, sin cachear la información, podemos notar una mejor tasa de respuestas correctas. Siendo la tasa de error en las pruebas de carga sin caché mucho mayor hasta en el caso de pruebas de estrés con caché.
+
+A su vez la diferencia del Response Time entre ambas tácticas es muy considerable, como se dijo anteriormente.
 
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
 
-Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
+Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estrés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
 
 ### 1 Nodo
 ![](/assets/app-1-solo.png)
@@ -244,6 +238,10 @@ Por otro lado, se define que en caso de que se haya superado la tasa de solicitu
 Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos observar como las requests son resueltas correctamente hasta casi llegando a la mitad de nuestra rampa ascendente, en donde la cantidad de solicitudes aceptadas corresponde a 100, lo cual se verifica con la configuración propuesta.
 
 ![](/assets/Ping-RateLimit-Nodelay.png)
+
+Esta táctica afecta considerablemente al atributo de calidad de `Availability` ya que al limitar la cantidad de solicitudes que se procesan evita que el sistema se sobrecargue y se caiga, es decir, deje de estar disponible.
+
+A su vez mejora el atributo de `Security` debido a que ayuda a prevenir ataques de denegación de servicio (DoS) y de otros tipos ataque que buscar sobrecargar al sistema mediante ráfagas de solicitudes.
 
 ### Async Design & Concurrency - Request Reply Asincrónico (Opcional)
 Como tácticas opcionales elegimos *Async Design* y *Concurrency*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
