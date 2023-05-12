@@ -146,6 +146,14 @@ Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress 
 ![](/assets/metarResourcesStress.jpeg)
 ![](/assets/metarAppStress.jpeg)
 
+### Space News
+Si en la presente táctica corremos el escenario de Loading Test para el servicio de Space News obtenemos lo siguiente:
+![](/assets/spacenews_sinCache_Loading.jpeg)
+
+Podemos observar que a partir de la fase plana en donde tiene mayor tasa de peticiones, el servicio comienza a fallar, y mantiene un promedio de 53.8 de request con dicho estado.
+
+Por otro lado el Response Time medio es un valor grande (7.13 segundos aproximadamente).
+
 ### Caché
 Endpoints cacheados:
 * /space_news
@@ -177,6 +185,10 @@ Si realizamos la misma táctica pero con los escenarios de estrés se obtiene lo
 Podemos observar que tenemos picos en los tiempos de respuestas. En el gráfico de `APP endpoint de space news` vemos que hay mas metricas a medida que pasa el tiempo que en el caso del grafico de `API externa de space news` y esto ocurre porque cacheamos la información, haciendo menos requests a la api externa. Podemos ver que hay una diferencia de al menos 1000 ms en los tiempos de respuesta.  
 
 El primer valor de respuesta tomado en el endpoint de la app es cercano a 1000 ms y este es el primer caso en el que no tenemos la info cacheada. Luego, en los tiempos en los que es cercano a cero, la info se fue obteniendo de la cache. Podemos ver que disminuye significativamente el tiempo de respuesta mejorando asi la `Performance`.
+
+Si lo comparamos con la táctica base, es decir, sin cachear la información, podemos notar una mejor tasa de respuestas correctas. Siendo la tasa de error en las pruebas de carga sin caché mucho mayor hasta en el caso de pruebas de estrés con caché.
+
+A su vez la diferencia del Response Time entre ambas tácticas es muy considerable, como se dijo anteriormente.
 
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
