@@ -49,30 +49,30 @@ Decidimos realizar dos grandes grupos de cargas de trabajo, los denominados _Loa
 Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a un valor umbral
 #### Ping
 
-* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
-* **Plain**: durante el peridod de 60 segundos se realizan 40 request port segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 40 request port segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 50 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Fact
-* **Starting**: durante el peridod de 30 segundos se realizan 4 request por segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18 request por segundo 
-* **Plain**: durante el peridod de 60 segundos se realizan 18 request por segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 18 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
-* **Starting**: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* **Starting**: durante el perido de 20 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
-* **Plain**: durante el peridod de 45 segundos se realizan 25 request por segundo 
+* **Plain**: durante el perido de 45 segundos se realizan 25 request por segundo 
 * **RampDown**: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
-* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 10 
-* **Plain**: durante el peridod de 60 segundos se realizan 10 request port segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 10 request port segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 10 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
@@ -80,23 +80,23 @@ Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a 
 En estos casos se busca evaluar como se comporta el sistema con cargas más allá de su capacidad normal de operación, con la finalidad de verificar si el sistema es capaz de manejar situaciones de picos de tráfico o grandes volúmenes de datos.
 
 #### Ping
-* **Starting**: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 10 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 180 
-* **Plain**: durante el peridod de 60 segundos se realizan 180 request por segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 180 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 180 request por segundo disminuyendo hasta llegar a 10 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Fact
 
-* Starting: durante el peridod de 30 segundos se realizan 10 requestpor segundo 
+* Starting: durante el perido de 30 segundos se realizan 10 requestpor segundo 
 * RampUp: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 150 
-* Plain: durante el peridod de 60 segundos se realizan 150 request por segundo 
+* Plain: durante el perido de 60 segundos se realizan 150 request por segundo 
 * RampDown: durante el periodo de 30 segundos se realizan 150 request por segundo disminuyendo hasta llegar a 10 request por segundo 
 * Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
 
-* Starting: durante el peridod de 20 segundos se realizan 4 request por segundo 
+* Starting: durante el perido de 20 segundos se realizan 4 request por segundo 
 * RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 130  
 * Plain: durante el peridod de 45 segundos se realizan 130 request port segundo 
 * RampDown: durante el periodo de 20 segundos se realizan 130 request por segundo disminuyendo hasta llegar a 4 request por segundo 
@@ -104,9 +104,9 @@ En estos casos se busca evaluar como se comporta el sistema con cargas más all�
 
 #### Space News
 
-* **Starting**: durante el peridod de 30 segundos se realizan 4 requestpor segundo 
+* **Starting**: durante el perido de 30 segundos se realizan 4 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 80  
-* **Plain**: durante el peridod de 60 segundos se realizan 80 request port segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 80 request port segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 80 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
@@ -181,7 +181,7 @@ El primer valor de respuesta tomado en el endpoint de la app es cercano a 1000 m
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
 
-Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
+Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estrés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
 
 ### 1 Nodo
 ![](/assets/app-1-solo.png)
