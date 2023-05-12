@@ -33,12 +33,12 @@ A continuación se muestra el diagrama de Vista de Componentes y Conectores para
 Se puede observar que la consulta, ya sea mediante Artillery o desde un cliente, pasa primero por el proxy de Nginx quien le envía al servidor de origen la correspondiente petición.
 Por otro lado, se tiene el servicio de Node.js quien le realiza a su vez peticiones a las APIs externas ya mencionadas anterioremente. 
 
-<img src="assets/VCC_Base.png" data-canonical-src="assets/VCC_Base.png" width="250" height="362" />
+<img src="assets/VCC_Base.png" data-canonical-src="assets/VCC_Base.png" width="260" height="376.48" />
 
 ### Caso con Replicación
 La principal diferencia con el caso anterior es que se puede ver a Nginx funcionando como un Load Balancer distribuyendo la carga a cada una de las instancias de nuestro servicio.
 
-<img src="assets/VCC_Base.png" data-canonical-src="assets/VCC_Base.png" width="403" height="375" />
+<img src="assets/VCC_Replicacion.png" data-canonical-src="assets/VCC_Base.png" width="403" height="377.05" />
 
 ## Escenarios
 Un escenario define los flujos de trabajo de prueba que se deben ejecutar en cada caso para poder así verificar la arquitectura de la aplicación y como impactan en los atributos de calidad en cada caso. 
