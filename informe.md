@@ -194,7 +194,7 @@ A continuación se realizan las mediciones de las métricas para el caso en el q
 
 Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
 
-#### 1 Nodo
+### 1 Nodo
 ![](/assets/app-1-solo.png)
 En la imagen anterior se puede observar que el único nodo tiene un consumo de CPU promedio de 1.49% y un 0.189% de memoria
 
@@ -221,7 +221,7 @@ Luego, apagando la instancia `app-2`, volvió a correrse la misma prueba obtenie
 
 Se puede observar un resultado similar, por lo que entendemos que `nginx` realiza un buen trabajo para mantener la disponibilidad del sistema balanceando la carga a las instancias activas. De no ser así, como balancea la carga de manera Round Robin, al menos 1/3 de las request deberian haber fallado al tratar de enviarlas a la instancia `app-2`.
 
-Por todo esto, concluimos que la tactica de **Replicacion** mejora la `Availability` y la `Performance`.
+Por todo esto, concluimos que la táctica de **Replicacion** mejora la `Availability` y la `Performance`.
 
 ### Rate Limiting
 Esta táctica es utilizada para limitar la cantidad de solicitudes que un usuario puede realizar en cierto período determinado. Para lograr dicho propósito se utilizó Nginx, cambiando las configuraciones para observar variaciones en las métricas.
