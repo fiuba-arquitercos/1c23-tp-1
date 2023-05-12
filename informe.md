@@ -91,14 +91,13 @@ Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos ob
 
 Endpoints cacheados:
 * /space_news
-* /fact
   
-En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
+En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. Y en el caso de /fact, no se cachea porque siempre debe devolverse un fact distinto salvo que lo repita la api. 
 
-La cantidad de items que se guardan en el cache son dos, ya que /space_news y /fact solo devuelven un valor.
+La cantidad de items que se guardan en el cache son 5 ya que son los titulos de las últimas 5 noticias que devuelve la api. 
 
 En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
 
-La información se guarda por 10 segundos en el caso de /space_news y en el caso de /fact 30 segundos. 
+La información de /space_news se guarda por 10 segundos.
 
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
