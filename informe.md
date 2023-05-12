@@ -148,16 +148,14 @@ Ahora bien, vamos a comparar con las métricas obtenidas en los casos de Stress 
 
 ### Caché
 Endpoints cacheados:
-* `/space_news`
-* `/fact`
+* /space_news
   
-En el caso del endpoint `/metar`, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. 
+En el caso del endpoint /metar, esta información no se cachea ya que es información de tiempo real y puede ser importante mostrar la infomacion actualizada momento a momento. Y en el caso de /fact, no se cachea porque siempre debe devolverse un fact distinto salvo que lo repita la api. 
 
-La cantidad de items que se guardan en el cache son dos, ya que `/space_news` y `/fact` solo devuelven un valor.
-
+La cantidad de items que se guardan en el cache son 5 ya que son los titulos de las últimas 5 noticias que devuelve la api. 
 En cuanto al llenado, se optó por la táctica de lazy population. Cada vez que un cliente llama a un endpoint y su información no se encuentra en el cache, la api cachea la misma para devolverla en los proximos segundos.
 
-La información se guarda por 10 segundos en el caso de `/space_news` y en el caso de `/fact` 30 segundos. 
+La información se guarda por 10 segundos en el caso de `/space_news`. 
 
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
 
@@ -198,7 +196,7 @@ A continuación se realizan las mediciones de las métricas para el caso en el q
 
 Para poder realizar comparaciones de esta táctica con el caso de un nodo solo, se utilizó el escenario de estés (*Stress Test*) para el servicio de Space News y se midieron los recursos utilizados.
 
-#### 1 Nodo
+### 1 Nodo
 ![](/assets/app-1-solo.png)
 En la imagen anterior se puede observar que el único nodo tiene un consumo de CPU promedio de 1.49% y un 0.189% de memoria
 
@@ -210,6 +208,22 @@ En la imagen anterior se puede observar que el único nodo tiene un consumo de C
 Ahora bien, si analizamos los recursos utilizados para cada una de las tres réplicas podemos ver que el consumo de CPU baja considerablemente entre ambos casos, siendo el promedio menor al 0.5% para cada uno. Lo que indicaría una baja del uso de CPU casi al tercio del caso con un único servicio levantado.
 
 Por otro lado, el uso de memoria se mantuvo casi constante siendo 0.189% en el caso de un solo nodo, contra 0.165% aproximadamente en cada una de las réplicas.
+
+### 2 Nodos - 1 Nodo caido
+
+Realizamos una prueba forzando la caida de un nodo (app-2) para analizar el comportamiento del Load Balancer del `nginx` y ver cómo impacta en la resolución de las request.
+
+Previamente se corrió una prueba de stress sobre el endpoint `space_news` para tener de referencia el tiempo de respuesta y la cantidad de request completados y con errores
+
+![](/assets/load_balancer_all_instances.png)
+
+Luego, apagando la instancia `app-2`, volvió a correrse la misma prueba obteniendo el siguiente resultado
+
+![](/assets/load_balancer_two_instances.png)
+
+Se puede observar un resultado similar, por lo que entendemos que `nginx` realiza un buen trabajo para mantener la disponibilidad del sistema balanceando la carga a las instancias activas. De no ser así, como balancea la carga de manera Round Robin, al menos 1/3 de las request deberian haber fallado al tratar de enviarlas a la instancia `app-2`.
+
+Por todo esto, concluimos que la táctica de **Replicacion** mejora la `Availability` y la `Performance`.
 
 ### Rate Limiting
 Esta táctica es utilizada para limitar la cantidad de solicitudes que un usuario puede realizar en cierto período determinado. Para lograr dicho propósito se utilizó Nginx, cambiando las configuraciones para observar variaciones en las métricas.
@@ -228,6 +242,7 @@ Si obtenemos las salidas al correr el escenario de Loading Test Ping, podemos ob
 
 ### Async Design & Concurrency - Request Reply Asincrónico (Opcional)
 Como tácticas opcionales elegimos *Async Design* y *Concurrency*, en el cual implementamos un Reques Reply Asincrónico. Para esto a travez del endpoint `/big_process` se simula un proceso de gran cómputo mediante un `sleep` de 10 segundos.
+
 
 Se plantea resolver el problema del procesamiento sincrónico de un proceso pesado donde varios clientes consuman dicho endpoint, el cual dejaría esperando a los clientes varios segundos hasta que el servidor pueda procesar todas las request pendientes de resolver. Además, cuantos mas usuarios paralelamente consuman este servicio, mas demoraría en responder.
 

@@ -40,30 +40,24 @@ app.get("/ping", (req, res) =>{
 
 async function process_fact() {
   let factString = await redisClient.get('fact');
-  
-  if (factString !== null) {
-    console.log("could get cached fact");
-    return JSON.parse(factString);
-  }else {
 
-    try {
-      const startTime = performance.now();
+  try {
+    const startTime = performance.now();
 
-      let factsRes = await axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en');
-      const endTime = performance.now();
-      statsd_client.timing('api.fact.response_time', endTime - startTime);
+    let factsRes = await axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en');
+    const endTime = performance.now();
+    statsd_client.timing('api.fact.response_time', endTime - startTime);
 
-      const factsInfo = factsRes.data;
-      console.log('Data: ', factsInfo);
-      let fact = factsInfo['text'];
-      redisClient.set('fact', JSON.stringify(fact), {EX: 30}).then(() => {console.log("Cached fact")}); 
-      return fact
+    const factsInfo = factsRes.data;
+    console.log('Data: ', factsInfo);
+    let fact = factsInfo['text'];
+    return fact
 
-    }catch (err) {
-      console.log('Error: ', err.message)
-      return err.message
-    }
+  }catch (err) {
+    console.log('Error: ', err.message)
+    return err.message
   }
+
 }
 
 app.get('/fact', async (req, res) => {
