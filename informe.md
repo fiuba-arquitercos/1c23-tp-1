@@ -159,23 +159,6 @@ La información se guarda por 10 segundos en el caso de `/space_news`.
 
 Si se toma un item del cache se conserva hasta que expire. Redis elimina el valor automáticamente cuando este expira.
 
-#### Fact
-A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*.
-
-Se puede observar como varían las fases de nuestro escenario y como todas las peticiones fueron procesadas de manera satisfactoria.
-![](/assets/scenarioFactLoading.jpeg)
-
-Si analizamos los valores del Response Time se aprecia un valor medio de 9.34 ms en donde cada 30 segundos tenemos un pico. Esto se debe efectivamente a la manera en que configuramos Redis, por lo que se debe a instantes en donde la información no se encuentra cacheada o ha expirado.
-En cuando los recursos se observa que el uso de CPU coincide con el de las distintas fases de nuestro escenario, con un valor promedio de 0.952 %. 
-![](/assets/responseTimeResourcesFactLoading.jpeg)
-
-Ahora bien, si comparamos el Response Time de nuestra API con el de la API externa de Useless Fact, podemos ver que justamente en los casos en donde se llama al recurso externo es donde tenemos un mayor Response Time, mientras que en los demás casos, en donde el dato se encuentra en caché, el Response Time es muy bajo.
-![](/assets/appFactLoading.jpeg)
-
-Por otro lado, al consumir este servicio durante el escenario de *Stress Test* se obtuvieron los siguientes resultados
-![](/assets/factScenarioStress.jpeg)
-![](/assets/factResourcesStress.jpeg)
-
 #### Space News
 A continuación se muestran las estadísticas obtenidas con el escenario de *Loading Test*
 
@@ -192,7 +175,8 @@ Si realizamos la misma táctica pero con los escenarios de estrés se obtiene lo
 ![](/assets/space_news_app_stress.jpeg)
 
 Podemos observar que tenemos picos en los tiempos de respuestas. En el gráfico de `APP endpoint de space news` vemos que hay mas metricas a medida que pasa el tiempo que en el caso del grafico de `API externa de space news` y esto ocurre porque cacheamos la información, haciendo menos requests a la api externa. Podemos ver que hay una diferencia de al menos 1000 ms en los tiempos de respuesta.  
-El primer valor de respuesta tomado en el endpoint de la app es cercano a 1000 ms y este es el primer caso en el que no tenemos la info cacheada. Luego, en los tiempos en los que es cercano a cero, la info se fue obteniendo de la cache. Podemos ver que disminuye significativamente el tiempo de respuesta.
+
+El primer valor de respuesta tomado en el endpoint de la app es cercano a 1000 ms y este es el primer caso en el que no tenemos la info cacheada. Luego, en los tiempos en los que es cercano a cero, la info se fue obteniendo de la cache. Podemos ver que disminuye significativamente el tiempo de respuesta mejorando asi la `Performance`.
 
 ### Replicación
 A continuación se realizan las mediciones de las métricas para el caso en el que se tienen 3 (tres) réplicas de nuestra aplicación. Para ello se explicitó en la configuración de Docker-Compose la creación de dichas instancias, y también se configuró Nginx para que distribuya la carga entre ellas aplicando la ténica de Round Robin.
