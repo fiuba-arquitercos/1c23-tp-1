@@ -49,28 +49,28 @@ Decidimos realizar dos grandes grupos de cargas de trabajo, los denominados _Loa
 Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a un valor umbral
 #### Ping
 
-* **Starting**: durante el perido de 30 segundos se realizan 4 request por segundo 
+* **Starting**: durante el periodo de 30 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 50  
-* **Plain**: durante el perido de 60 segundos se realizan 40 request port segundo 
+* **Plain**: durante el perido de 60 segundos se realizan 40 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 50 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Fact
-* **Starting**: durante el perido de 30 segundos se realizan 4 request por segundo 
+* **Starting**: durante el periodo de 30 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 18 request por segundo 
 * **Plain**: durante el perido de 60 segundos se realizan 18 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 18 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
-* **Starting**: durante el perido de 20 segundos se realizan 4 request por segundo 
+* **Starting**: durante el periodo de 20 segundos se realizan 4 request por segundo 
 * **RampUp**: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 25  
 * **Plain**: durante el perido de 45 segundos se realizan 25 request por segundo 
 * **RampDown**: durante el periodo de 20 segundos se realizan 25 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
-* **Starting**: durante el perido de 30 segundos se realizan 4 requestpor segundo 
+* **Starting**: durante el periodo de 30 segundos se realizan 4 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 10 
 * **Plain**: durante el perido de 60 segundos se realizan 10 request port segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 10 request por segundo disminuyendo hasta llegar a 4 request por segundo 
@@ -80,33 +80,33 @@ Es un tipo de prueba donde se va aumentando la craga del sistema hasta llegar a 
 En estos casos se busca evaluar como se comporta el sistema con cargas más allá de su capacidad normal de operación, con la finalidad de verificar si el sistema es capaz de manejar situaciones de picos de tráfico o grandes volúmenes de datos.
 
 #### Ping
-* **Starting**: durante el perido de 30 segundos se realizan 10 requestpor segundo 
+* **Starting**: durante el periodo de 30 segundos se realizan 10 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 180 
-* **Plain**: durante el perido de 60 segundos se realizan 180 request por segundo 
+* **Plain**: durante el periodo de 60 segundos se realizan 180 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 180 request por segundo disminuyendo hasta llegar a 10 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Fact
 
-* Starting: durante el perido de 30 segundos se realizan 10 requestpor segundo 
+* Starting: durante el periodo de 30 segundos se realizan 10 requestpor segundo 
 * RampUp: durante el periodo de 30 segundo se realizan 10 request de segundos incrementenado hasta  llegar a 150 
-* Plain: durante el perido de 60 segundos se realizan 150 request por segundo 
+* Plain: durante el periodo de 60 segundos se realizan 150 request por segundo 
 * RampDown: durante el periodo de 30 segundos se realizan 150 request por segundo disminuyendo hasta llegar a 10 request por segundo 
 * Ending: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
 #### Metar
 
-* Starting: durante el perido de 20 segundos se realizan 4 request por segundo 
+* Starting: durante el periodo de 20 segundos se realizan 4 request por segundo 
 * RampUp: durante el periodo de 20 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 130  
-* Plain: durante el peridod de 45 segundos se realizan 130 request port segundo 
+* Plain: durante el periodo de 45 segundos se realizan 130 request por segundo 
 * RampDown: durante el periodo de 20 segundos se realizan 130 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * Ending: durante el periodo de 20 segundos se realizan 1 request por segundo.
 
 #### Space News
 
-* **Starting**: durante el perido de 30 segundos se realizan 4 requestpor segundo 
+* **Starting**: durante el periodo de 30 segundos se realizan 4 requestpor segundo 
 * **RampUp**: durante el periodo de 30 segundo se realizan 4 request de segundos incrementenado hasta  llegar a 80  
-* **Plain**: durante el perido de 60 segundos se realizan 80 request port segundo 
+* **Plain**: durante el periodo de 60 segundos se realizan 80 request por segundo 
 * **RampDown**: durante el periodo de 30 segundos se realizan 80 request por segundo disminuyendo hasta llegar a 4 request por segundo 
 * **Ending**: durante el periodo de 30 segundos se realizan 1 request por segundo.
 
